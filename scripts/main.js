@@ -1,24 +1,7 @@
 
-/*
-var urlWeibo = "http://m.meegusta.ru/api/v2/infostream/weibo.json?wid=1443451270116834&isBiTrack=false&from=home&feature=12&did=969a23e22f97a346450611163ff0a4c8&pn=ru.magazine.now&appvc=1&chn=ofw&lc=ru-me";
-var xhr = new XMLHttpRequest();
-xhr.onload = function() {
-  alert("xhr onload");
-};
-xhr.open("GET", urlWeibo, true);
-xhr.send(null);
-setTimeout(function() {
-  //location.replace("http://www.sina.com");
-  // confirm("show dialog after 10000");
-  document.title="董洁";
-  // myOl.scrollIntoView();
-  alert(xhr.status);
-}, 10000);*/
-/*
-
 var myHeading = document.querySelector('h1');
 //alert("start to change title " + multiply(2, 12));
-myHeading.innerHTML = '女神 董洁';
+myHeading.innerHTML = '小虎的女神——董洁';
 myHeading.onclick=function() {
     //alert('Ouch! Stop poking me!');
   window.resizeTo(1000 ,1200);
@@ -82,5 +65,5 @@ var a = document.createElement("div");
 window.onresize = function(event) {
   alert("resize");
 };
-*/
+
 
