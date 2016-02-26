@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <script type="text/javascript" src="scripts/jQuery.js"></script>
+<title>Jie Dong</title>
+  </head>
+  <body>
+  	<h1>Jie Dong </h1>
+    <img src="images/dj_001.jpg" alt="The first photo for Jie Dong">
+  	<a target="_blank" href="http://baike.baidu.com/link?url=U1n785TSa1u0qMbh9DGswAUNPaluV0Ai6zBe82utNHrLF5MNr9GvoE2JNu_VQJdwRPalqwtv2RECoPNy8psWo8hXlKpRy4i0oa2s18uQwMS" ><h1> 百度百科 </h1> </a>
+    <ol id = "the_list">
+    	<li>早年经历</li>
+    	<li>演艺经历</li>
+    	<li>个人生活</li>
+      <li>主要作品</li>
+    </ol>
+    <input type = "button" value = " click me" onclick="alert(&quot;been clicked&quot;)"/>
+    <p class = "detail_info"> 
+    	董洁，1980年4月19日出生于辽宁省大连市，中国内地女演员。毕业于中国人民解放军艺术学院舞蹈系，毕业后于1995年尾正式到兵士歌舞团做跳舞演员。2000年中央电视台春节联欢晚会出道，同年被张艺谋导演相中出演电影《幸福时光》，获得了2001年"华表奖"电影新人奖。2011年参演电视剧《倾城雪》，饰演江家千金江嘉沅一角。 同年获“优酷影视指数盛典”开年最受欢迎女演员奖“。2012年推出《我爱的我》和《那时的我们》两只单曲，3月参演电视剧《相爱十年》，饰演韩灵一角。同年主演音乐电影《我爱的我》。
+    </p>
+    <img src="images/dj_002.jpg" alt="The second photo for Jie Dong">
+
+    <button>Change user</button>
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script>
+
+    $(document).ready(function(){
+
+      console.log("document ready");
+      setTimeout(function() {
+        $(".detail_info").css("color","#f00");
+        window.location.assign("http://www.baidu.com");
+      }, 3000);
+
+      $(".detail_info").click(function() {
+        console.log("click to hide detail");
+        $(".detail_info").slideToggle(30000);
+      });
+
+    });
+ 
+    </script>
+</body>
+</html>
