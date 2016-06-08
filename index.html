@@ -1,47 +1,374 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <script type="text/javascript" src="scripts/jQuery.js"></script>
-<title>Jie Dong</title>
-  </head>
-  <body>
-  	<h1>Jie Dong </h1>
-    <img src="images/dj_001.jpg" alt="The first photo for Jie Dong">
-  	<a target="_blank" href="http://baike.baidu.com/link?url=U1n785TSa1u0qMbh9DGswAUNPaluV0Ai6zBe82utNHrLF5MNr9GvoE2JNu_VQJdwRPalqwtv2RECoPNy8psWo8hXlKpRy4i0oa2s18uQwMS" ><h1> 百度百科 </h1> </a>
-    <ol id = "the_list">
-    	<li>早年经历</li>
-    	<li>演艺经历</li>
-    	<li>个人生活</li>
-      <li>主要作品</li>
-    </ol>
-    <input type = "button" value = " click me" onclick="alert(&quot;been clicked&quot;)"/>
-    <p class = "detail_info"> 
-    	董洁，1980年4月19日出生于辽宁省大连市，中国内地女演员。毕业于中国人民解放军艺术学院舞蹈系，毕业后于1995年尾正式到兵士歌舞团做跳舞演员。2000年中央电视台春节联欢晚会出道，同年被张艺谋导演相中出演电影《幸福时光》，获得了2001年"华表奖"电影新人奖。2011年参演电视剧《倾城雪》，饰演江家千金江嘉沅一角。 同年获“优酷影视指数盛典”开年最受欢迎女演员奖“。2012年推出《我爱的我》和《那时的我们》两只单曲，3月参演电视剧《相爱十年》，饰演韩灵一角。同年主演音乐电影《我爱的我》。
-    </p>
-    <img src="images/dj_002.jpg" alt="The second photo for Jie Dong">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>微友助手</title>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <!--<link href="./styles/bootstrap.min.css" rel="stylesheet">
+    <script src="./scripts/jQuery.js"></script>
+    <script src="./scripts/bootstrap.min.js"></script>-->
+    <!-- <link href="./libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <link href="./libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>-->
+    <style>
+        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+            font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+        }
 
-    <button>Change user</button>
-    <script type="text/javascript" src="scripts/main.js"></script>
-    <script>
+        /* top start */
+        .top_container {
+            background: url("./images/header_bg.png") center no-repeat;
+            background-size: cover;
+            background-position: 50% 0;
+            min-height: 45em;
+            width: 100%;
+            color: #fff;
+        }
 
-    $(document).ready(function(){
+        .logo_container {
+            float: left;
+            margin-left: 12%;
+            height: 4em;
+        }
 
-      console.log("document ready");
-      setTimeout(function() {
-        $(".detail_info").css("color","#00f");
-      //  window.location.assign("http://www.baidu.com");
-      }, 3000);
+        .logo_container span {
+            font-size: 1.5em;
+            line-height: 2.75em;
+            margin-left: 1em;
+        }
 
-      $(".detail_info").click(function() {
-        console.log("click to hide detail");
-        $(".detail_info").slideToggle(30000);
-      });
+        .logo_container img {
+            height: 2.25em;
+            width: 2.25em;
+            margin-top: 0.8725em;
+            float: left;
+        }
 
+        .link_container {
+            float: right;
+            margin-right: 12%;
+            height: 4em;
+            padding: 0;
+            color: #9a9a9a;
+        }
+
+        .link_container span {
+            line-height: 4em;
+            padding: 0 0.75em;
+            font-size: 1.125em;
+        }
+
+        .link_container .create_link {
+            background: #12b7f5;
+            color: #fff;
+            padding-top: 0.43em;
+            padding-bottom: 0.43em;
+            border-radius: 2px;
+        }
+
+        .menu_enter {
+            float: right;
+            height: 3.939em;
+            width: 4.5em;
+            display: none;
+            padding: 1.313em;
+
+        }
+
+        .top_menu_container {
+            position: fixed;
+            width: 100%;
+            z-index: 99;
+            color: #fff;
+            min-height: 4em;
+        }
+
+        .menu_list_container {
+            background: #32323a;
+            clear: both;
+            text-align: center;
+            padding: 1em;
+            display: none;
+            border-top: #3b3b43 1px solid;
+        }
+
+        .menu_list_container span {
+            display: block;
+            font-size: 1.125em;
+            color: #9a9a9a;
+            line-height: 3em;
+        }
+
+        .menu_list_container .create_link {
+            background: #12b7f5;
+            width: 7em;
+            margin: 0 auto;
+            color: #fff;
+            line-height: 1.3em;
+            padding-top: 0.43em;
+            padding-bottom: 0.43em;
+            border-radius: 2px;
+        }
+
+        .slogan_container {
+            left: 0;
+            margin: 0 auto;
+            margin-top: 12em;
+        }
+
+        .slogan_container .title {
+            font-size: 2.25em;
+            margin: 0 30%;
+        }
+
+        .slogan_container .summary {
+            font-size: 1.5em;
+            margin: 0 20%;
+            padding: 2.5em 0;
+        }
+
+        .slogan_container .action_create_robot {
+            background: #12b7f5;
+            padding: 0.5em 1em;
+            display: block;
+            width: 8em;
+            font-size: 1.5em;
+            margin: 2.5em auto;
+            border-radius: 2px;
+        }
+
+        /* top end */
+
+        /* feature start */
+        .feature_container {
+            display: table;
+            height: 29.5em;
+        }
+
+        .feature_img_container {
+            height: 29.5em;
+            line-height: 29.5em;
+        }
+
+        .feature_img_container img {
+            height: 19.5em;
+            width: 31.25em;
+        }
+
+        .feature_des {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .feature_des .summary {
+            font-size: 1.125em;
+            color: #9a9a9a;
+        }
+
+        .des_left {
+            padding-right: 2.5em;
+        }
+
+        .des_right {
+            padding-left: 2.5em;
+        }
+
+        .feature_img_sm {
+            display: none;
+        }
+
+        .lg_row {
+            max-width: 62.5em;
+            margin: 0 auto;
+        }
+
+        /* feature end */
+        h1 {
+            font-size: 2em;
+            color: #12b7f5;
+        }
+
+        /* FAQ start */
+        .faq_container {
+            padding: 5em;
+            background: #f5f5f5;
+            font-size: 1.125em;
+        }
+        .fqa_item_container {
+            margin-top: 2.5em;
+        }
+
+        .faq_container h1 {
+        }
+        .faq_container .question {
+            color: #404040;
+        }
+        .faq_container .answer {
+            font-size: 1.125em;
+            color: #9a9a9a;
+        }
+
+        /* FAQ end */
+
+        .bottom_bar {
+            background: #32323a;
+            color: #9a9a9a;
+            padding: 1.5em;
+            font-size: 0.875em;
+        }
+        .top_menu_bar_container {
+            height: 4em;
+        }
+    </style>
+    <link href="./styles/respond_media.css" rel="stylesheet"/> <!-- 37.5em = 600px @ 16px -->
+    <!--[if lt IE 9]>
+    <script src="./libs/js/responds.src.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="top_menu_container">
+    <div class="top_menu_bar_container">
+     <div class="top_menu_bar">
+        <span class="logo_container">
+            <img src="./images/head_logo.png"/>
+            <span>微友助手</span>
+        </span>
+        <span class="link_container">
+            <span class="feature_link">产品功能</span>
+            <span class="contact_link">联系我们</span>
+            <span class="help_link">帮助</span>
+            <span class="login_link">登录</span>
+            <span class="create_link">创建机器人</span>
+        </span>
+        <img class="menu_enter" src="./images/top_menu_enter.png"/>
+    </div>
+    </div>
+    <div class="menu_list_container">
+        <span class="feature_link">产品功能</span>
+        <span class="contact_link">联系我们</span>
+        <span class="help_link">帮助</span>
+        <span class="login_link">登录</span>
+        <span class="create_link">创建机器人</span>
+    </div>
+</div>
+<div class="top_container text-center">
+    <div class="container">
+        <div class="slogan_container">
+            <div class="title">一个诱人的主标题一个诱人的主标题</div>
+            <div class="summary">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</div>
+            <span class="action_create_robot">创建机器人</span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row lg_row">
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container text-center">
+            <img src="./images/feature_test.png"/>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_right">
+            <div class="feature_des">
+                <h1>微群体检报告</h1>
+                <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
+            </div>
+        </div>
+    </div>
+    <div class="row lg_row">
+        <div class="col-sm-12 col-md-6 col-lg-6  feature_img_container feature_img_sm text-center">
+            <img src="./images/feature_reply.png"/>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_left">
+            <div class="feature_des">
+                <h1>微群体检报告</h1>
+                <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container feature_img_md text-center">
+            <img src="./images/feature_reply.png"/>
+        </div>
+    </div>
+    <div class="row lg_row">
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container text-center">
+            <img src="./images/feature_inactive.png"/>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_right">
+            <div class="feature_des">
+                <h1>微群体检报告</h1>
+                <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="faq_container">
+    <div class="container">
+        <h1 class="text-center">常见问题</h1>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <div class="feature_des">
+                    <p class="question">1第一个问题第一个问题第一个问题</p>
+                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottom_bar text-center">
+    <div>版权所有©啦啦啦啊公司</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+         $(window).scroll(function () {
+         if ($(this).scrollTop() > 128) {
+         $('.top_menu_bar_container').css('background', '#32323a')
+         } else {
+         $('.top_menu_bar_container').css('background', 'rgba(0, 0, 0, 0)')
+         }
+         });
+        $('.menu_enter').bind('click', function () {
+            $('.menu_list_container').slideToggle('fast');
+        });
     });
- 
-    </script>
+</script>
 </body>
 </html>
