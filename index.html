@@ -20,10 +20,14 @@
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
             font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
         }
+        a:link,a:visited,a:hover{
+            text-decoration:none;
+            color: #9a9a9a;
+        }
 
         /* top start */
         .top_container {
-            background: url("./images/header_bg.png") center no-repeat;
+            background: url("./images/header_bg.jpg") center no-repeat;
             background-size: cover;
             background-position: 50% 0;
             min-height: 45em;
@@ -64,12 +68,15 @@
             font-size: 1.125em;
         }
 
-        .link_container .create_link {
+        .link_container .action_create_robot {
             background: #12b7f5;
             color: #fff;
             padding-top: 0.43em;
             padding-bottom: 0.43em;
             border-radius: 2px;
+        }
+        .action_create_robot:hover, .login_link:hover {
+            cursor: pointer;
         }
 
         .menu_enter {
@@ -105,7 +112,7 @@
             line-height: 3em;
         }
 
-        .menu_list_container .create_link {
+        .menu_list_container .action_create_robot {
             background: #12b7f5;
             width: 7em;
             margin: 0 auto;
@@ -119,7 +126,7 @@
         .slogan_container {
             left: 0;
             margin: 0 auto;
-            margin-top: 12em;
+            margin-top: 14em;
         }
 
         .slogan_container .title {
@@ -139,8 +146,55 @@
             display: block;
             width: 8em;
             font-size: 1.5em;
-            margin: 2.5em auto;
+            margin: 0 auto;
+            margin-top: 1em;
             border-radius: 2px;
+        }
+
+        .qrcode_container {
+            display: none;
+        }
+        .qrcode_container img {
+            height: 10em;
+            width: 10em;
+            margin-top: 1em;
+        }
+        .qrcode_container p {
+            font-size: 1.2em;
+        }
+        .qrcode_container span {
+            font-size: 1.4em;
+            color: #12b7f5;
+        }
+        .qrcode_login_container {
+            margin-top: 16em;
+        }
+        
+        .qrcode_follow_container {
+            margin-top: 14em;
+            display: none;
+        }
+        .qrcode_follow_container div {
+            margin: 2em auto;
+        }
+        .qrcode_follow_container input {
+            width: 10em;
+            display: inline;
+            height: 2.5em;
+            margin-top: -0.5em;
+            background: rgba(0, 0, 0, 0);
+        }
+        .qrcode_follow_container .obtain_id_code {
+            display: inline;
+            font-size: 1.2em;
+            color: #fafafa;
+            margin-left: 1em;
+        }
+        .qrcode_follow_container .asure_id_code {
+            background: #12b7f5;
+            color: #fff;
+            padding: 0.4em 6.4em;
+            font-size: 1.2em;
         }
 
         /* top end */
@@ -149,6 +203,7 @@
         .feature_container {
             display: table;
             height: 29.5em;
+            padding: 0;
         }
 
         .feature_img_container {
@@ -196,7 +251,7 @@
 
         /* FAQ start */
         .faq_container {
-            padding: 5em;
+            padding: 5em 0;
             background: #f5f5f5;
             font-size: 1.125em;
         }
@@ -204,14 +259,15 @@
             margin-top: 2.5em;
         }
 
-        .faq_container h1 {
-        }
         .faq_container .question {
             color: #404040;
         }
         .faq_container .answer {
             font-size: 1.125em;
             color: #9a9a9a;
+        }
+        .fqa_row {
+            margin: 0 2.5em;
         }
 
         /* FAQ end */
@@ -240,21 +296,21 @@
             <span>微友助手</span>
         </span>
         <span class="link_container">
-            <span class="feature_link">产品功能</span>
-            <span class="contact_link">联系我们</span>
-            <span class="help_link">帮助</span>
+            <a href="#feature_link_anchor"><span class="feature_link">产品功能</span></a>
+            <a href="#contact_link_anchor"><span class="contact_link">联系我们</span></a>
+            <a href="#help_link_anchor"><span class="help_link">帮助</span></a>
             <span class="login_link">登录</span>
-            <span class="create_link">创建机器人</span>
+            <span class="action_create_robot">创建机器人</span>
         </span>
         <img class="menu_enter" src="./images/top_menu_enter.png"/>
     </div>
     </div>
     <div class="menu_list_container">
-        <span class="feature_link">产品功能</span>
-        <span class="contact_link">联系我们</span>
-        <span class="help_link">帮助</span>
+        <a href="#feature_link_anchor"><span class="feature_link">产品功能</span></a>
+        <a href="#contact_link_anchor"><span class="contact_link">联系我们</span></a>
+        <a href="#help_link_anchor"><span class="help_link">帮助</span></a>
         <span class="login_link">登录</span>
-        <span class="create_link">创建机器人</span>
+        <span class="action_create_robot">创建机器人</span>
     </div>
 </div>
 <div class="top_container text-center">
@@ -264,9 +320,22 @@
             <div class="summary">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</div>
             <span class="action_create_robot">创建机器人</span>
         </div>
+        <div class="qrcode_login_container qrcode_container">
+            <p>使用<span>微信</span>扫描二维码登录</p>
+            <img src="./images/qrcode_for_login.jpg"/>
+        </div>
+        <div class="qrcode_follow_container qrcode_container">
+            <p>使用<span>微信</span>扫描二维码关注公众号</p>
+            <img src="./images/qrcode_for_login.jpg"/>
+            <div>
+                <input type="text" class="form-control" id="name" placeholder="">
+                <span class="obtain_id_code">获取验证码</span>
+            </div>
+            <span class="asure_id_code">确认</span>
+        </div>
     </div>
 </div>
-<div class="container">
+<div class="container" id="feature_link_anchor">
     <div class="row lg_row">
         <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container text-center">
             <img src="./images/feature_test.png"/>
@@ -304,55 +373,83 @@
         </div>
     </div>
 </div>
-<div class="faq_container">
+<div class="faq_container" id="help_link_anchor">
     <div class="container">
         <h1 class="text-center">常见问题</h1>
-        <div class="row">
+        <div class="row fqa_row">
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row fqa_row">
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row fqa_row">
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <div class="feature_des">
                     <p class="question">1第一个问题第一个问题第一个问题</p>
                     <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-                </div>
+            </div>
+        </div>
+        <div class="row fqa_row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+        </div>
+        <div class="row fqa_row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+        </div>
+        <div class="row fqa_row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+        </div>
+        <div class="row fqa_row">
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+                <p class="question">1第一个问题第一个问题第一个问题</p>
+                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="bottom_bar text-center">
+<div class="bottom_bar text-center" id="contact_link_anchor">
     <div>版权所有©啦啦啦啊公司</div>
 </div>
 
@@ -368,6 +465,12 @@
         $('.menu_enter').bind('click', function () {
             $('.menu_list_container').slideToggle('fast');
         });
+        
+        $('.action_create_robot, .login_link').bind('click', function () {
+            $('.slogan_container').hide();
+            $('.qrcode_login_container').show();
+            $('.menu_list_container').slideUp('fast');
+        })
     });
 </script>
 </body>

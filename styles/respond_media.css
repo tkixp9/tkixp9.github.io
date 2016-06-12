@@ -25,6 +25,7 @@
     }
     .feature_container {
         height: auto;
+        padding: 0 1em;
     }
     .feature_img_container {
         height: auto;
@@ -36,6 +37,9 @@
     }
     .top_menu_container {
         background: #32323a;
+    }
+    .fqa_row {
+        margin: 0;
     }
 }
 @media (max-width: 500px) {
@@ -73,5 +77,4 @@
         max-width: 62.5em;
         padding: 0;
     }
-
 }
