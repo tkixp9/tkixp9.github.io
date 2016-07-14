@@ -78,3 +78,10 @@
         padding: 0;
     }
 }
+
+@media (max-width: 1000px) {
+    .feature_img_container img {
+        height: 15.6em;
+        width: 25em;
+    }
+}

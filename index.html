@@ -9,13 +9,7 @@
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
     <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <!--<link href="./styles/bootstrap.min.css" rel="stylesheet">
-    <script src="./scripts/jQuery.js"></script>
-    <script src="./scripts/bootstrap.min.js"></script>-->
-    <!-- <link href="./libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-     <link href="./libs/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
-     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>-->
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
     <style>
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
             font-family: Microsoft YaHei, '宋体', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
@@ -169,7 +163,7 @@
         .qrcode_login_container {
             margin-top: 16em;
         }
-        
+
         .qrcode_follow_container {
             margin-top: 14em;
             display: none;
@@ -282,15 +276,15 @@
             height: 4em;
         }
     </style>
-    <link href="./styles/respond_media.css" rel="stylesheet"/> <!-- 37.5em = 600px @ 16px -->
+    <link href="./css/respond_media.css" rel="stylesheet"/> <!-- 37.5em = 600px @ 16px -->
     <!--[if lt IE 9]>
-    <script src="./libs/js/responds.src.js"></script>
+    <script src="js/responds.src.js"></script>
     <![endif]-->
 </head>
 <body>
 <div class="top_menu_container">
     <div class="top_menu_bar_container">
-     <div class="top_menu_bar">
+        <div class="top_menu_bar">
         <span class="logo_container">
             <img src="./images/head_logo.png"/>
             <span>微友助手</span>
@@ -302,8 +296,8 @@
             <span class="login_link">登录</span>
             <span class="action_create_robot">创建机器人</span>
         </span>
-        <img class="menu_enter" src="./images/top_menu_enter.png"/>
-    </div>
+            <img class="menu_enter" src="./images/top_menu_enter.png"/>
+        </div>
     </div>
     <div class="menu_list_container">
         <a href="#feature_link_anchor"><span class="feature_link">产品功能</span></a>
@@ -321,8 +315,7 @@
             <span class="action_create_robot">创建机器人</span>
         </div>
         <div class="qrcode_login_container qrcode_container">
-            <p>使用<span>微信</span>扫描二维码登录</p>
-            <img src="./images/qrcode_for_login.jpg"/>
+            <div id="login_container"></div><!--<img src="./images/qrcode_for_login.jpg"/>-->
         </div>
         <div class="qrcode_follow_container qrcode_container">
             <p>使用<span>微信</span>扫描二维码关注公众号</p>
@@ -337,10 +330,10 @@
 </div>
 <div class="container" id="feature_link_anchor">
     <div class="row lg_row">
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container text-center">
+        <div class="col-xs-12 col-sm-6 feature_img_container text-center">
             <img src="./images/feature_test.png"/>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_right">
+        <div class="col-xs-12 col-sm-6 feature_container des_right">
             <div class="feature_des">
                 <h1>微群体检报告</h1>
                 <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
@@ -348,24 +341,24 @@
         </div>
     </div>
     <div class="row lg_row">
-        <div class="col-sm-12 col-md-6 col-lg-6  feature_img_container feature_img_sm text-center">
+        <div class="col-xs-12 col-sm-6  feature_img_container feature_img_sm text-center">
             <img src="./images/feature_reply.png"/>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_left">
+        <div class="col-xs-12 col-sm-6 feature_container des_left">
             <div class="feature_des">
                 <h1>微群体检报告</h1>
                 <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container feature_img_md text-center">
+        <div class="col-xs-12 col-sm-6 feature_img_container feature_img_md text-center">
             <img src="./images/feature_reply.png"/>
         </div>
     </div>
     <div class="row lg_row">
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_img_container text-center">
+        <div class="col-xs-12 col-sm-6 feature_img_container text-center">
             <img src="./images/feature_inactive.png"/>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 feature_container des_right">
+        <div class="col-xs-12 col-sm-6 feature_container des_right">
             <div class="feature_des">
                 <h1>微群体检报告</h1>
                 <p class="sumarry">这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题这是副标题</p>
@@ -377,71 +370,31 @@
     <div class="container">
         <h1 class="text-center">常见问题</h1>
         <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-        </div>
-        <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-        </div>
-        <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                    <p class="question">1第一个问题第一个问题第一个问题</p>
-                    <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-        </div>
-        <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
         </div>
         <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <p class="question">1第一个问题第一个问题第一个问题</p>
-                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-        </div>
-        <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
-                <p class="question">1第一个问题第一个问题第一个问题</p>
-                <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
         </div>
         <div class="row fqa_row">
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 fqa_item_container">
+            <div class="col-xs-12 col-sm-6 fqa_item_container">
                 <p class="question">1第一个问题第一个问题第一个问题</p>
                 <p class="answer">我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答我是回答</p>
             </div>
@@ -455,22 +408,31 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-         $(window).scroll(function () {
-         if ($(this).scrollTop() > 128) {
-         $('.top_menu_bar_container').css('background', '#32323a')
-         } else {
-         $('.top_menu_bar_container').css('background', 'rgba(0, 0, 0, 0)')
-         }
-         });
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 128) {
+                $('.top_menu_bar_container').css('background', '#32323a')
+            } else {
+                $('.top_menu_bar_container').css('background', 'rgba(0, 0, 0, 0)')
+            }
+        });
         $('.menu_enter').bind('click', function () {
             $('.menu_list_container').slideToggle('fast');
         });
-        
+
         $('.action_create_robot, .login_link').bind('click', function () {
             $('.slogan_container').hide();
             $('.qrcode_login_container').show();
             $('.menu_list_container').slideUp('fast');
         })
+        var obj = new WxLogin({
+            id:"login_container",
+            appid: "wx55b4861850c46209",
+            scope: "snsapi_login",
+            redirect_uri: "http://qunsou.co/mainpage.html",
+            state: "",
+            style: "white",
+            href: ""
+        });
     });
 </script>
 </body>
