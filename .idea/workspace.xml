@@ -93,8 +93,8 @@
       <file leaf-file-name="two_column_scroll.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/two_column_scroll.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+            <state relative-caret-position="171">
+              <caret line="112" column="6" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -323,12 +323,12 @@
       <workItem from="1467860759601" duration="2499000" />
       <workItem from="1467941644350" duration="29000" />
       <workItem from="1468482256765" duration="5327000" />
-      <workItem from="1468550193485" duration="1547000" />
+      <workItem from="1468550193485" duration="1835000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94643000" />
+    <option name="totallyTimeSpent" value="94931000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="42" width="1280" height="709" extended-state="0" />
@@ -746,8 +746,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/two_column_scroll.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+        <state relative-caret-position="171">
+          <caret line="112" column="6" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
