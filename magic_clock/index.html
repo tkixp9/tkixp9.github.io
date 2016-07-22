@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Magic Clock</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="height: 100%">
+    <canvas id="clock_canvas" style="height: 100%"></canvas>
+<script src="js/digit.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var THE_WIDTH = document.documentElement.clientWidth;
+        var THE_HEIGHT = document.documentElement.clientHeight;
+        var colorBalls = [];
+        var colors = ['#f00', '#00f', '#0f0', '#ff0', '#0ff', '#f0f'];
+        var raduis = 5;
+        var paddingUnit = 2;
+        var singleUnit = 2 * (raduis + paddingUnit);
+        var firstUnitsMarginTop = 13;
+        var firstUnitsMarginLeft = 7;
+        var unitsNumber = 7;
+        var unitsDivide = 2;
+
+        var endTime = new Date().getTime() + (1 * 60 * 60 + 1) * 1000;
+        var lastSeconds;
+        var lastMinutes;
+        var lastHours;
+
+        var canvas = document.getElementById('clock_canvas');
+        canvas.height = THE_HEIGHT;//document.body.clientHeight;
+        canvas.width = THE_WIDTH;//document.body.clientWidth;
+        var context = canvas.getContext('2d');
+
+        setInterval(function () {
+            context.clearRect(0, 0, THE_WIDTH, THE_HEIGHT);
+            drawDigits(context);
+            drawColorBalls(context)
+        }, 50);
+
+        addColorBall(300, 300); // test
+
+        function drawDigits(context) {
+            var interval = getCurrentDigitNumber();
+            var h = parseInt(interval / ( 60 * 60));
+            var m = parseInt(interval / 60) % 60;
+            var s = interval % 60;
+
+            var status = getSingleNumberStatus(h, lastHours);
+
+            drawDigit(context, digit[status.first], 0, status.fchanged);
+            drawDigit(context, digit[status.second], unitsNumber + 1, status.schanged);
+
+            status = getSingleNumberStatus(m, lastMinutes);
+            drawDigit(context, digit[10], (unitsNumber + 1) * 2);
+            drawDigit(context, digit[status.first], (unitsNumber + 1) * 2 + (unitsDivide + 1), status.fchanged);
+            drawDigit(context, digit[status.second], (unitsNumber + 1) * 3 + (unitsDivide + 1), status.schanged);
+
+            status = getSingleNumberStatus(s, lastSeconds);
+            drawDigit(context, digit[10], (unitsNumber + 1) * 4 + (unitsDivide + 1));
+            drawDigit(context, digit[status.first], (unitsNumber + 1) * 4 + (unitsDivide + 1) * 2, status.fchanged);
+            drawDigit(context, digit[status.second], (unitsNumber + 1) * 5 + (unitsDivide + 1) * 2, status.schanged);
+
+            lastHours = h;
+            lastMinutes = m;
+            lastSeconds = s;
+
+        }
+
+        function getSingleNumberStatus(current, last) {
+            var status = {first: parseInt(current / 10), second: current % 10};
+            if (last != undefined) {
+                status.fchanged = (status.first != parseInt(last / 10));
+                status.schanged = (status.second != last % 10);
+            }
+            return status;
+
+        }
+
+        function getCurrentDigitNumber() {
+            var interval = Math.round((endTime - new Date().getTime()) / 1000);
+            return interval > 0 ? interval : 0;
+        }
+
+        function drawDigit(context, number, unitsBefore, changed) {
+            for (var i = 0; i < number.length; i++) {
+                for (var j = 0; j < number[i].length; j++) {
+                    if (number[i][j]) {
+                        var x = (j + firstUnitsMarginLeft + unitsBefore) * singleUnit;
+                        var y = (i + firstUnitsMarginTop) * singleUnit;
+                        drawSingleball(context, x, y);
+                        if (changed) {
+                            addColorBall(x, y);
+                        }
+                    }
+                }
+            }
+        }
+
+        function drawSingleball(context, x, y, color) {
+            context.beginPath();
+            context.arc(x, y, raduis, 0, Math.PI * 2);
+            context.closePath();
+            if (color) {
+                context.fillStyle = color;
+            } else {
+                context.fillStyle = '#0000a0';
+            }
+            context.fill();
+        }
+
+        function addColorBall(xVaulue, yValue) {
+            colorBalls.unshift({
+                x: xVaulue + 4,
+                y: yValue - 10,
+                vx: (Math.random() * 10) - 5,
+                vy: -(Math.random() * 5),
+                color: colors[parseInt(Math.random() * colors.length)],
+            });
+        }
+
+        function drawColorBalls(context) {
+            for (var i = colorBalls.length - 1; i >= 0; i--) {
+                var item = colorBalls[i];
+
+                updateBallStatus(item);
+                if (item.x < singleUnit / 2 || item.x > THE_WIDTH - singleUnit / 2) {
+                    colorBalls.splice(i, 1);
+                } else {
+                    drawSingleball(context, item.x, item.y, item.color);
+                }
+            }
+        }
+
+        function updateBallStatus(ball) {
+            ball.x = ball.x + ball.vx;
+            ball.y = ball.y + ball.vy;
+            if (ball.y > THE_HEIGHT - singleUnit / 2) {
+                ball.y = THE_HEIGHT - singleUnit / 2;
+                ball.vy = -parseInt(ball.vy * Math.random() * 1.1);
+            }
+            ball.vy = ball.vy + 2; //重力加速度
+        }
+    };
+
+
+</script>
+</body>
+</html>
