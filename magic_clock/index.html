@@ -19,13 +19,16 @@
     window.onload = function () {
         var THE_WIDTH = document.documentElement.clientWidth;
         var THE_HEIGHT = document.documentElement.clientHeight;
+        console.log(THE_WIDTH)
         var colorBalls = [];
         var colors = ['#f00', '#00f', '#0f0', '#ff0', '#0ff', '#f0f'];
-        var raduis = 5;
-        var paddingUnit = 2;
-        var singleUnit = 2 * (raduis + paddingUnit);
+        var normalSize = THE_WIDTH / 120;
+        var outerRadius = normalSize > 7 ? 7 : normalSize;
+        var paddingUnit = parseInt(outerRadius / 3);
+        var singleUnit = outerRadius * 2;
+        var raduis = outerRadius - paddingUnit;
         var firstUnitsMarginTop = 13;
-        var firstUnitsMarginLeft = 7;
+        var firstUnitsMarginLeft = normalSize>7 ? 7 : 4;
         var unitsNumber = 7;
         var unitsDivide = 2;
 
