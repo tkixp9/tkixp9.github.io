@@ -9,18 +9,38 @@
     </style>
 </head>
 <body>
-    <div style="background: #f00;height: 40px;width: 10px;display: inline;"></div>
-    <div style="background: #0f0;height: 40px;width: 100px;"></div>
-    <span style="background: #f00;height: 40px;width: 10px;display: none"><img src="./images/dj_003.jpg"></span>
-    <span style="background: #0f0;height: 40px;width: 100px;display: block;"></span>
-    <span style="background: #00f;padding-top: 400px;height: 40px;width: 100px;display: none;">dddddddd</span>
+<canvas style="border: 1px red solid;" width="600" height="300" id="canvas_src"></canvas>
+<canvas style="border: 1px red solid;" width="600" height="300" id="canvas_des"></canvas>
+<div onclick="start()" style="height: 20px; background: #f00;">start</div>
 
-    <pre style="overflow: hidden">
-        sjlfjs
-        sdfmssdsfs/mfw';n sfwl;          ;n sfwl;                  wk;n sfwl;                  wk;n sfwl;                  wk;n sfwl;                  wk;n sfwl;                  wk;n sfwl;                  wk        wknefklewn                welrw
+<script>
+    var canvasSrc = document.getElementById('canvas_src');
+    var contextSrc = canvasSrc.getContext('2d');
+    var canvasDes = document.getElementById('canvas_des');
+    var contextDes = canvasDes.getContext('2d');
 
-        sldf
+    var image = new Image();
+    window.onload = function () {
 
-    </pre>
+        image.src = './images/dj_009.jpg';
+        image.onload = function () {
+            contextSrc.drawImage(image, 0, 0, 259, 345);
 
+
+        };
+    };
+    function start() {
+            var imageData = contextSrc.getImageData(0, 0, 259, 345);
+            for (var i = 0; i < 259; i++) {
+                for (var j = 0; j < 345; j++) {
+                    //imageData.data[(i * 345 + j) * 4] = 0
+                   // imageData.data[(i * 345 + j) * 4 + 1] = 0
+                    imageData.data[(i * 345 + j) * 4 + 2] = 0
+                    //imageData.data[(i * 345 + j) * 4 + 3] = 200
+                }
+
+            }
+            contextDes.putImageData(imageData, 0, 0);
+    }
+</script>
 </body>
