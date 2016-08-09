@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        ＊ {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="img_container">
+    <img class="img_blur" style="position: absolute;-webkit-filter: blur(10px);" src="../images/dj_pic.jpg"/>
+    <img class="img_org"  style="position: absolute;-webkit-clip-path:circle(40px at 200px 220px);" src="../images/dj_pic.jpg"/>
+</div>
+<div class="yuedu" style="padding-top: 700px" onclick="onToukuiClick()">偷窥</div>
+<div class="yuedu"  onclick="onYueduClick()">阅读</div>
+
+<script>
+    var raduis = 40;
+    function onYueduClick() {
+        var interval1 = setInterval(function () {
+            if (raduis > 900) {
+                clearInterval(interval1)
+            }
+            console.log('ddd='+raduis)
+            var temp = 'circle('+raduis+'px at 200px 220px)';
+            $('.img_org').css('-webkit-clip-path', temp)
+        }, 60);
+    }
+    function onToukuiClick() {
+
+        var x = Math.random() * 517;
+        var y = Math.random() * 690;
+        if (x < 40) {
+            x = 40;
+        } else if (x > 477) {
+             x = 477;
+        }
+        if (y < 40) {
+            y = 40;
+        } else if (y > 650) {
+            y = 650;
+        }
+
+        var temp = 'circle(40px at '+x+'px '+y+'px)';
+        $('.img_org').css('-webkit-clip-path', temp)
+    }
+
+</script>
+
+</body>
+</html>

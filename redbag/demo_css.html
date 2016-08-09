@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <style>
+        ＊ {
+            margin: 0;
+            padding: 0;
+        }
+
+        .img_blur {
+            filter: blur(20px);
+            -webkit-filter: blur(20px);
+            -moz-filter: blur(20px);
+            -ms-filter: blur(20px);
+            -o-filter: blur(20px);
+        }
+        img {
+            height: 552px;
+            width: 414px;
+        }
+        .demo_container {
+        }
+        .demo_container_first {
+
+        }
+
+        .demo_container_first .img_blur {
+            margin-left: -414px;
+            float: left;
+            z-index: 1;
+
+        }
+        .demo_container_first .img_org {
+            position: relative;
+            float: left;
+            z-index: 99;
+            clip-path:circle(40px at 200px 200px);
+            -webkit-clip-path:circle(40px at 200px 220px);
+        }
+
+
+        .demo_container_second {
+            background: #ff0;
+            clear: both;
+
+        }
+        .demo_container_second .img_blur{
+            float: left;
+        }
+
+        .demo_container_second .img_org_bg {
+            z-index: 999;
+            position: absolute;
+            overflow: hidden;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            margin-left: 160px;
+            margin-top: 180px;
+        }
+        .demo_container_second .img_org {
+            position: absolute;
+            top: -180px;
+            left: -160px;
+        }
+        .btn_container {
+            width: 100px;
+            margin-top:200px;
+            float: left;
+        }
+        .btn_container div {
+            height: 40px;
+            width: 100px;
+            background: #ff9500;
+            border-radius: 8px;
+            text-align: center;
+            line-height:40px;
+            margin: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<p>
+    clip-path Demo
+</p>
+<div class="demo_container_first demo_container">
+    <img class="img_org" src="./images/dj_pic.jpg"/>
+    <img class="img_blur" src="./images/dj_pic.jpg" />
+    <div class="btn_container">
+        <div class="toukui">偷窥</div>
+        <div class="xinshang">欣赏</div>
+    </div>
+</div>
+
+<div style="height: 80px;clear: both"></div>
+<p>
+    combination Demo
+</p>
+<div class="demo_container_second demo_container">
+    <img class="img_blur" src="./images/dj_pic.jpg" />
+    <div class="img_org_bg">
+        <img class="img_org" src="./images/dj_pic.jpg"/>
+    </div>
+    <div class="btn_container">
+        <div class="toukui">偷窥</div>
+        <div class="xinshang">欣赏</div>
+    </div>
+</div>
+<script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    var firstRaduis = 40;
+    var firstX = 200;
+    var firstY = 220;
+    $('.demo_container_first .toukui').bind('click', function () {
+        firstRaduis = 40;
+        firstX = getRandom(414);
+        firstY = getRandom(552);
+        var value = 'circle(50px at '+firstX+'px '+firstY+'px)';
+        $('.demo_container_first .img_org').css({'clip-path':value, '-webkit-clip-path': value});
+    });
+    $('.demo_container_first .xinshang').bind('click', function () {
+        var donghua = setInterval(function () {
+            firstRaduis += 20;
+            var value = 'circle('+firstRaduis+'px at '+firstX+'px '+firstY+'px)';
+            $('.demo_container_first .img_org').css({'clip-path':value, '-webkit-clip-path': value});
+            if (firstRaduis > 800) {
+                clearInterval(donghua);
+            }
+
+        },60);
+    });
+    function getRandom(max) {
+        var result = Math.random() * max;
+        if (result < 60) {
+            return 60;
+        }
+        if (result > max - 60) {
+            return max - 60;
+        }
+        return result;
+    }
+
+    var secondRaduis = 40;
+    var secondX = 200;
+    var secondY = 220;
+    $('.demo_container_second .toukui').bind('click', function () {
+        secondRaduis = 40;
+        secondX = getRandom(414);
+        secondY = getRandom(552);
+
+        var leftValue = (secondX - 40) + 'px';
+        var topValue = (secondY - 40) + 'px'
+        $('.demo_container_second .img_org').css({'left':'-'+leftValue, 'top': '-'+topValue});
+        $('.demo_container_second .img_org_bg').css({'width':'80px', 'height': '80px', 'margin-left':leftValue, 'margin-top': topValue, 'border-radius': '50%'});
+
+    });
+
+    $('.demo_container_second .xinshang').bind('click', function () {
+        var donghuaSecond = setInterval(function () {
+            secondRaduis += 20;
+            var valueWidth = secondRaduis * 2;
+            if (valueWidth > 414) {
+                valueWidth = 424;
+                var valueHeight = 562;
+                $('.demo_container_second .img_org_bg').css({'width':valueWidth, 'height': valueHeight, 'margin-left':0, 'margin-top': 0, 'border-radius': '0'});
+                $('.demo_container_second .img_org').css({'left':0, 'top': 0});
+                $('.demo_container_second .img_org_bg').css({});
+                clearInterval(donghuaSecond);
+                return;
+            }
+            $('.demo_container_second .img_org_bg').css({'width':valueWidth, 'height': valueWidth});
+
+            secondX -= 20;
+            secondY -= 20;
+            if (secondX < 40) {
+                secondX = 40;
+            }
+            if (secondY < 40) {
+                secondY = 40;
+            }
+
+            var leftValue = (secondX - 40) + 'px';
+            var topValue = (secondY - 40) + 'px'
+            $('.demo_container_second .img_org').css({'left':'-'+leftValue, 'top': '-'+topValue});
+            $('.demo_container_second .img_org_bg').css({'margin-left':leftValue, 'margin-top': topValue});
+            if (secondRaduis > 800) {
+                clearInterval(donghuaSecond);
+            }
+
+        },60);
+    });
+</script>
+</body>
+</html>
