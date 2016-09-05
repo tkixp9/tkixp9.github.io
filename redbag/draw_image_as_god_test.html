@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        ＊ {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas_blur"></canvas>
+<canvas id="canvas_example"></canvas>
+
+<script>
+    window.onload=function () {
+
+        var THE_WIDTH = document.documentElement.clientWidth;
+        var THE_HEIGHT = document.documentElement.clientHeight;
+
+        var canvasBlur = document.getElementById('canvas_blur');
+
+        var BLUR_RADUIS = 5;
+        var MASAIKE_RADUIS = 7;
+        var TEXT_HEIGHT = 60;
+        canvasBlur.height = THE_HEIGHT*2;
+        canvasBlur.width = THE_WIDTH;
+
+        // 每行四张图，间隔一张图，图间隔为x，左右间隔为2x，则x＝图宽/7
+
+        var context = canvasBlur.getContext('2d');
+
+        var image = new Image();
+        image.src = './images/1.pic.jpg';
+        image.onload = function () {
+            console.log('tkyj++++'+image.width+'  '+image.height)
+
+            var singleWidth = parseInt(THE_WIDTH / 35);
+            var imageDestWidth = image.width;
+            var imageDestHeight = image.height * imageDestWidth / image.width;
+            imageDestHeight = parseInt(imageDestHeight)
+            imageDestWidth = parseInt(imageDestWidth)
+
+            console.log('tkyj++++'+imageDestWidth+'  '+imageDestHeight);
+            context.font = "30px '宋体'";
+
+            drawOriginImage(image, singleWidth * 2, TEXT_HEIGHT, '原图', singleWidth * 2,TEXT_HEIGHT - 10);// origin
+
+
+            drawGrayImage();
+
+
+            function drawGrayImage() {
+                var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
+                for (var i=0; i< imageDestHeight; i++) {
+                    for (var j=0;j<imageDestWidth;j++) {
+                       // var temp  =  imageData.data[(i*imageDestWidth + j) * 4 + 0] * 0.3+  imageData.data[(i*imageDestWidth + 1) * 4 + 2] * 0.59 +  imageData.data[(i*imageDestWidth + j) * 4 + 2] * 0.11;
+                        var temp  =  Math.max(imageData.data[(i*imageDestWidth + j) * 4 + 0] ,imageData.data[(i*imageDestWidth + 1) * 4 + 2] * 0.59,imageData.data[(i*imageDestWidth + j) * 4 + 2]);
+                        imageData.data[(i*imageDestWidth + j) * 4 + 0] =
+                        imageData.data[(i*imageDestWidth + j) * 4 + 1] =
+                        imageData.data[(i*imageDestWidth + j) * 4 + 2] = temp;
+                    }
+                }
+                drawImage(imageData, singleWidth * 18, TEXT_HEIGHT, '灰度', singleWidth * 18, TEXT_HEIGHT - 10);
+                function average(a, b, c) {
+                    return a * 0.3 + b * 0.59 + c * 0.11;
+                }
+            }
+
+
+            function drawOriginImage(imagedData, imagex, imagey, textData, fontx, fonty) {
+                context.drawImage(imagedData, imagex, imagey, imageDestWidth, imageDestHeight);
+                context.fillText(textData, fontx, fonty);
+            }
+
+            function drawImage(imagedData, imagex, imagey, textData, fontx, fonty) {
+                console.log('tkyj+++++')
+                context.putImageData(imagedData, imagex, imagey);
+                context.fillText(textData, fontx, fonty);
+            }
+            
+            
+        };
+
+
+
+    };
+
+</script>
+</body>
+</html>

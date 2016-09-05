@@ -20,8 +20,8 @@
             -o-filter: blur(20px);
         }
         img {
-            height: 552px;
-            width: 414px;
+            height: 483px;
+            width: 362px;
         }
         .demo_container {
         }
@@ -30,7 +30,7 @@
         }
 
         .demo_container_first .img_blur {
-            margin-left: -414px;
+            margin-left: -362px;
             float: left;
             z-index: 1;
 
@@ -70,7 +70,7 @@
         }
         .btn_container {
             width: 100px;
-            margin-top:200px;
+            margin-top:20px;
             float: left;
         }
         .btn_container div {
@@ -98,7 +98,7 @@
     </div>
 </div>
 
-<div style="height: 80px;clear: both"></div>
+<div style="height: 20px;clear: both"></div>
 <p>
     combination Demo
 </p>
@@ -119,8 +119,8 @@
     var firstY = 220;
     $('.demo_container_first .toukui').bind('click', function () {
         firstRaduis = 40;
-        firstX = getRandom(414);
-        firstY = getRandom(552);
+        firstX = getRandom(362);
+        firstY = getRandom(483);
         var value = 'circle(50px at '+firstX+'px '+firstY+'px)';
         $('.demo_container_first .img_org').css({'clip-path':value, '-webkit-clip-path': value});
     });
@@ -133,7 +133,7 @@
                 clearInterval(donghua);
             }
 
-        },60);
+        },100);
     });
     function getRandom(max) {
         var result = Math.random() * max;
@@ -151,8 +151,8 @@
     var secondY = 220;
     $('.demo_container_second .toukui').bind('click', function () {
         secondRaduis = 40;
-        secondX = getRandom(414);
-        secondY = getRandom(552);
+        secondX = getRandom(362);
+        secondY = getRandom(483);
 
         var leftValue = (secondX - 40) + 'px';
         var topValue = (secondY - 40) + 'px'
@@ -165,9 +165,9 @@
         var donghuaSecond = setInterval(function () {
             secondRaduis += 20;
             var valueWidth = secondRaduis * 2;
-            if (valueWidth > 414) {
-                valueWidth = 424;
-                var valueHeight = 562;
+            if (valueWidth > 362) {
+                valueWidth = 372;
+                var valueHeight = 493;
                 $('.demo_container_second .img_org_bg').css({'width':valueWidth, 'height': valueHeight, 'margin-left':0, 'margin-top': 0, 'border-radius': '0'});
                 $('.demo_container_second .img_org').css({'left':0, 'top': 0});
                 $('.demo_container_second .img_org_bg').css({});
@@ -193,7 +193,7 @@
                 clearInterval(donghuaSecond);
             }
 
-        },60);
+        },100);
     });
 </script>
 </body>

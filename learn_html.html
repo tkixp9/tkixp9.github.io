@@ -4,16 +4,24 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>
     <title>HTML LEARN</title>
     <style>
     </style>
 </head>
 <body>
+ <div class="      tt1     ttw ttc      " id="ddd" >text</div>
 <canvas style="border: 1px red solid;" width="600" height="300" id="canvas_src"></canvas>
 <canvas style="border: 1px red solid;" width="600" height="300" id="canvas_des"></canvas>
 <div onclick="start()" style="height: 20px; background: #f00;">start</div>
-
+ <input class="count_input" type="tel" value="1" maxlength="4" title="请输入购买量">\
+<span class="tes">222</span>
 <script>
+    var a = 9;
+    console.log('tkyj++++'+(a*9.9))
+    function clickClass() {
+        console.log($(this).attr('class')+'+++tkyj++')
+    }
     var canvasSrc = document.getElementById('canvas_src');
     var contextSrc = canvasSrc.getContext('2d');
     var canvasDes = document.getElementById('canvas_des');
@@ -21,6 +29,25 @@
 
     var image = new Image();
     window.onload = function () {
+
+        $('.count_input').bind('input propertychange', function() {
+            var newCount = $(this).val();
+            console.log('tkyj+++++'+typeof newCount)
+            $('.tes').text(newCount);
+        });
+
+        $('#ddd').bind('click', function (event) {
+            console.log($(this).attr('class')+'+++tkyj++')
+            var classString = $(this).attr('class');
+            var classArray = classString.split(/\s+/);
+            console.log('+++tkyj++' + classArray)
+            console.log('+++tkyj++' + classArray.length)
+            classArray.forEach(function (item) {
+                console.log('+++tkyj++' + item)
+                console.log('+++tkyj++' + item.length)
+
+            })
+        })
 
         image.src = './images/dj_009.jpg';
         image.onload = function () {

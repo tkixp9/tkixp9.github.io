@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <style>
+        ＊ {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" ></canvas>
+
+<script>
+    window.onload=function () {
+
+        var canvasBlur = document.getElementById('canvas');
+        console.log(document.documentElement.clientHeight+ '  ' + document.documentElement.clientWidth)
+
+        var THE_WIDHT = 362;
+        var THE_HEIGHT = 483;
+        var BLUR_RADUIS = 10;
+        canvasBlur.height = THE_HEIGHT;//document.documentElement.clientWidth;
+        canvasBlur.width = THE_WIDHT;//document.documentElement.clientHeight;
+
+        var context = canvasBlur.getContext('2d');
+
+        var image = new Image();
+        image.src = './images/dj_pic.jpg';
+        image.onload = function () {
+            context.drawImage(image, 0, 0, THE_WIDHT, THE_HEIGHT);
+            var imageData = context.getImageData(0, 0, THE_WIDHT, THE_HEIGHT);
+            for (var i = 0; i < THE_HEIGHT; i++) {
+                for (var j = 0; j < THE_WIDHT; i++) {
+                    resetData(imageData.data, i, j);
+                }
+            }
+            function resetData(data, i, j) {
+                var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                    if (m < 0) {
+                        continue;
+                    }
+                    for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                        if (n < 0) {
+                            continue;
+                        }
+                        var positon = (m * THE_WIDHT + n) * 4;
+                        temp.r += data[positon];
+                        temp.g += data[positon + 1];
+                        temp.b += data[positon + 2];
+                        temp.a += data[positon + 3];
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    positon = (i * THE_WIDHT + j) * 4;
+                    imageData.data[positon] = temp.r/count;
+                    imageData.data[positon + 1] = temp.g/count;
+                    imageData.data[positon + 2] =temp.b/count;
+                    imageData.data[positon + 3] =temp.a/count;
+                }
+
+            }
+            context.putImageData(imageData, 0, 0);
+        };
+
+
+
+        function drawDemo(context) {
+            context.beginPath();
+            context.moveTo(100, 100);
+            context.lineTo(100, 300);
+            context.lineTo(200, 400);
+
+            context.strokeStyle = 'red';
+            context.fillStyle = 'blue';
+            context.lineWidth = 10;
+            context.closePath();
+            context.fill();
+            context.stroke();
+        }
+    };
+
+</script>
+</body>
+</html>
