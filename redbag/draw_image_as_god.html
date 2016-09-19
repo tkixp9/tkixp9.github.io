@@ -29,7 +29,7 @@
         var BLUR_RADUIS = 5;
         var MASAIKE_RADUIS = 7;
         var TEXT_HEIGHT = 60;
-        canvasBlur.height = THE_HEIGHT*3;
+        canvasBlur.height = THE_HEIGHT*4;
         canvasBlur.width = THE_WIDTH;
 
         // 每行四张图，间隔一张图，图间隔为x，左右间隔为2x，则x＝图宽/7
@@ -37,7 +37,7 @@
         var context = canvasBlur.getContext('2d');
 
         var image = new Image();
-        image.src = './images/1.pic.jpg';
+        image.src = './images/head_icon.jpg';
         image.onload = function () {
             console.log('tkyj++++'+image.width+'  '+image.height)
 
@@ -52,29 +52,39 @@
 
             drawOriginImage(image, singleWidth * 2, TEXT_HEIGHT, '原图', singleWidth * 2,TEXT_HEIGHT - 10);// origin
 
-            drawOppositeImage();
+            drawGrayImage(0, 1);
+            drawGrayMoreImage(0, 2);
+            drawOppositeImage(0, 3);
 
-            drawGrayImage();
+            drawWhiteBlackImage(1, 0);
+            drawBanboImage(1, 1);
+            drawHuaijiuImage(1, 2);
+            drawRedImage(1, 3);
 
-            drawRedImage();
+            drawRuihuaImage(2, 0);
+            drawMasaikeImage(2, 1);
+            drawBlurImage(2, 2);
+            drawFudiaoImage(2, 3);
 
-            drawBlurImage();
+            drawDotImage(3,0);
 
-            drawMasaikeImage();
 
-            drawWhiteBlackImage();
+            function drawDotImage(row, col) {
+                var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
+                for (var i=0; i< imageDestHeight; i++) {
+                    for (var j=0;j<imageDestWidth;j++) {
+                        if (i%6>4 | j%6>4) {
+                            imageData.data[(i*imageDestWidth + j) * 4 + 0] =255;
+                            imageData.data[(i*imageDestWidth + j) * 4 + 1] =255;
+                            imageData.data[(i*imageDestWidth + j) * 4 + 2] =255;
+                        }
+                    }
+                }
+                //drawImage(imageData, singleWidth * 26, TEXT_HEIGHT*3+2*imageDestHeight, '怀旧', singleWidth * 26, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                drawImageAtPosition(imageData, '点图', row, col);
+            }
 
-            drawBanboImage();
-
-            drawFudiaoImage();
-
-            drawRuihuaImage();
-
-            drawGrayMoreImage();
-
-            drawHuaijiuImage();
-
-            function drawHuaijiuImage() {
+            function drawHuaijiuImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -86,13 +96,14 @@
                         imageData.data[(i*imageDestWidth + j) * 4 + 2] =(r*272 + g*534 + b*131)/1000;
                     }
                 }
-                drawImage(imageData, singleWidth * 26, TEXT_HEIGHT*3+2*imageDestHeight, '怀旧', singleWidth * 26, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                //drawImage(imageData, singleWidth * 26, TEXT_HEIGHT*3+2*imageDestHeight, '怀旧', singleWidth * 26, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                drawImageAtPosition(imageData, '怀旧', row, col);
                 function average(a, b, c) {
                     return a * 0.3 + b * 0.59 + c * 0.11;
                 }
             }
 
-            function drawGrayMoreImage() {
+            function drawGrayMoreImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -109,14 +120,15 @@
                                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = temp;
                     }
                 }
-                drawImage(imageData, singleWidth * 18, TEXT_HEIGHT*3+2*imageDestHeight, '锐化', singleWidth * 18, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                //drawImage(imageData, singleWidth * 18, TEXT_HEIGHT*3+2*imageDestHeight, '灰度加强', singleWidth * 18, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                drawImageAtPosition(imageData, '灰度加强', row, col);
                 function average(a, b, c) {
                     return a * 0.3 + b * 0.59 + c * 0.11;
                 }
             }
 
 
-            function drawRuihuaImage() {
+            function drawRuihuaImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=1; i< imageDestHeight - 1; i++) {
                     for (var j=1;j<imageDestWidth - 1;j++) {
@@ -125,7 +137,8 @@
                         imageData.data[(i*(imageDestWidth - 2) + j) * 4 + 2] = ruihuaReset(i, j, imageData.data, imageDestWidth - 2, 2);
                     }
                 }
-                drawImage(imageData, singleWidth * 10, TEXT_HEIGHT*3+2*imageDestHeight, '锐化', singleWidth * 10, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+               // drawImage(imageData, singleWidth * 10, TEXT_HEIGHT*3+2*imageDestHeight, '锐化', singleWidth * 10, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                drawImageAtPosition(imageData, '锐化', row, col);
                 function ruihuaReset(i, j, data, width, sub) {
                     var temp = data[(i*width + j) * 4 + sub] * 10;
                     for (var l = -1; l < 2; l++) {
@@ -139,7 +152,7 @@
             }
 
 
-            function drawFudiaoImage() {
+            function drawFudiaoImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -152,10 +165,11 @@
                                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = temp;
                     }
                 }
-                drawImage(imageData, singleWidth * 2, TEXT_HEIGHT*3+2*imageDestHeight, '浮雕', singleWidth * 2, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+               // drawImage(imageData, singleWidth * 2, TEXT_HEIGHT*3+2*imageDestHeight, '浮雕', singleWidth * 2, TEXT_HEIGHT * 3 - 10+imageDestHeight * 2);// origin
+                drawImageAtPosition(imageData, '浮雕', row, col);
             }
 
-            function drawBanboImage() {
+            function drawBanboImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -164,10 +178,11 @@
                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = imageData.data[(i*imageDestWidth + j)*4 + 2] > 127 ? 255 : 0;
                     }
                 }
-                drawImage(imageData, singleWidth * 26, TEXT_HEIGHT*2+imageDestHeight, '斑驳', singleWidth * 26, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                //drawImage(imageData, singleWidth * 26, TEXT_HEIGHT*2+imageDestHeight, '斑驳', singleWidth * 26, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                drawImageAtPosition(imageData, '斑驳', row, col);
             }
 
-            function drawWhiteBlackImage() {
+            function drawWhiteBlackImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -177,11 +192,12 @@
                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = temp / 3 > 128 ? 255 : 0;
                     }
                 }
-                drawImage(imageData, singleWidth * 18, TEXT_HEIGHT*2+imageDestHeight, '黑白', singleWidth * 18, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+               // drawImage(imageData, singleWidth * 18, TEXT_HEIGHT*2+imageDestHeight, '黑白', singleWidth * 18, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                drawImageAtPosition(imageData, '黑白', row, col);
             }
 
 
-            function drawMasaikeImage() {
+            function drawMasaikeImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -193,10 +209,11 @@
                     }
                 }
 
-                drawImage(imageData, singleWidth * 10, TEXT_HEIGHT*2+imageDestHeight, '马赛克', singleWidth * 10, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                //drawImage(imageData, singleWidth * 10, TEXT_HEIGHT*2+imageDestHeight, '马赛克', singleWidth * 10, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                drawImageAtPosition(imageData, '马赛克', row, col);
             }
 
-            function drawBlurImage() {
+            function drawBlurImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
 
                 for (var i = 0; i < imageDestHeight; i++) {
@@ -205,7 +222,8 @@
                     }
                 }
 
-                drawImage(imageData, singleWidth * 2, TEXT_HEIGHT*2+imageDestHeight, '模糊', singleWidth * 2, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                //drawImage(imageData, singleWidth * 2, TEXT_HEIGHT*2+imageDestHeight, '模糊', singleWidth * 2, TEXT_HEIGHT * 2 - 10+imageDestHeight);// origin
+                drawImageAtPosition(imageData, '模糊', row, col);
                 function resetData(data, i, j, width) {
                     var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
                     for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
@@ -235,17 +253,18 @@
 
             }
 
-            function drawRedImage() {
+            function drawRedImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
-                        imageData.data[(i*imageDestWidth + j) * 4 + 0] = 255;
+                        imageData.data[(i*imageDestWidth + j) * 4 + 0] = 180;
                     }
                 }
-                drawImage(imageData, singleWidth * 26, TEXT_HEIGHT, '红色', singleWidth * 26, TEXT_HEIGHT - 10);
+             //   drawImage(imageData, singleWidth * 26, TEXT_HEIGHT, '红色', singleWidth * 26, TEXT_HEIGHT - 10);
+                drawImageAtPosition(imageData, '红色', row, col);
             }
 
-            function drawGrayImage() {
+            function drawGrayImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -255,13 +274,14 @@
                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = temp;
                     }
                 }
-                drawImage(imageData, singleWidth * 18, TEXT_HEIGHT, '灰度', singleWidth * 18, TEXT_HEIGHT - 10);
+               // drawImage(imageData, singleWidth * 18, TEXT_HEIGHT, '灰度', singleWidth * 18, TEXT_HEIGHT - 10);
+                drawImageAtPosition(imageData, '灰度', row, col);
                 function average(a, b, c) {
                     return a * 0.3 + b * 0.59 + c * 0.11;
                 }
             }
 
-            function drawOppositeImage() {
+            function drawOppositeImage(row, col) {
                 var imageData = context.getImageData(singleWidth * 2, TEXT_HEIGHT, imageDestWidth, imageDestHeight);
                 for (var i=0; i< imageDestHeight; i++) {
                     for (var j=0;j<imageDestWidth;j++) {
@@ -270,7 +290,13 @@
                         imageData.data[(i*imageDestWidth + j) * 4 + 2] = 255 - imageData.data[(i*imageDestWidth + j)*4 + 2];
                     }
                 }
-                drawImage(imageData, singleWidth * 10, TEXT_HEIGHT, '反色', singleWidth * 10, TEXT_HEIGHT - 10);// origin
+                //drawImage(imageData, singleWidth * 10, TEXT_HEIGHT, '反色', singleWidth * 10, TEXT_HEIGHT - 10);// origin
+                drawImageAtPosition(imageData, '反色', row, col);
+            }
+            function drawImageAtPosition(imagedData, textData, row, col) {
+                console.log('tkyj+++++')
+                context.putImageData(imagedData, singleWidth * (2 + 8 * col), TEXT_HEIGHT + (TEXT_HEIGHT + imageDestHeight) * row);
+                context.fillText(textData, singleWidth * (2 + 8 * col), TEXT_HEIGHT - 10 + (TEXT_HEIGHT + imageDestHeight) * row);
             }
 
             function drawOriginImage(imagedData, imagex, imagey, textData, fontx, fonty) {

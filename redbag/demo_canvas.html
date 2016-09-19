@@ -6,48 +6,162 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Red bag</title>
-    <script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>
     <style>
         ＊ {
             margin: 0;
             padding: 0;
         }
-        .subject_title {
-            height: 2rem;
-            width: 10rem;
-            border-radius: 1rem;
-            line-height:2rem;
-            text-align: center;
-            margin: 1rem auto;
+        canvas {
+            position: absolute;
+            margin: 20px;
         }
-        .featrue_1 {
+        #canvas_blur {
+            z-index: 99;
+        }
+        #canvas_display {
+            z-index: 999;
+        }
+        .btn_container {
+            width: 100px;
+            margin-top:20px;
+            float: left;
+            margin-left: 400px;
+        }
+        .btn_container div {
+            height: 40px;
+            width: 100px;
             background: #ff9500;
+            border-radius: 8px;
+            text-align: center;
+            line-height:40px;
+            margin: 30px;
         }
-        .featrue_2 {
-            background: #9fff76;
-        }
-        .featrue_3 {
-            background: #00adfd;
-        }
-        .featrue_4 {
-            background: #ff00dd;
-        }
+
     </style>
 </head>
 <body>
-
-<div class="subject_title featrue_1">基础API绘制</div>
-<div class="feature_1_display_container">
-    <canvas height="100px">
-
-    </canvas>
+<canvas id="canvas_blur">
+</canvas>
+<canvas id="canvas_origin">
+</canvas>
+<canvas id="canvas_display">
+</canvas>
+<div class="btn_container">
+    <div class="toukui">偷窥</div>
+    <div class="xinshang">欣赏</div>
 </div>
-<div class="subject_title featrue_2">绘图API</div>
-<div class="subject_title featrue_3">绘图效果示例</div>
-<div class="subject_title featrue_4">canvas红包照片</div>
-
-
 <script>
+
+    window.onload=function () {
+        var BLUR_RADUIS = 15;
+        var DISPLAY_RADUIS = 50;
+        var firstRaduis = DISPLAY_RADUIS;
+        var displayx,displayy;
+
+        var THE_WIDTH = document.documentElement.clientWidth * 0.1;
+        var THE_HEIGHT = document.documentElement.clientHeight * 0.8;
+
+        var canvasBlur = document.getElementById('canvas_blur');
+        canvasBlur.height = THE_HEIGHT;
+        canvasBlur.width = THE_WIDTH;
+        var contextBlur = canvasBlur.getContext('2d');
+
+        var canvasDisplay = document.getElementById('canvas_display');
+        canvasDisplay.height = THE_HEIGHT;
+        canvasDisplay.width = THE_WIDTH;
+        var contextDisplay = canvasDisplay.getContext('2d');
+
+        var originCanvas = document.getElementById('canvas_origin');
+        originCanvas.height = THE_HEIGHT;
+        originCanvas.width = THE_WIDTH;
+        var contextOrigin = originCanvas.getContext('2d');
+
+        var image = new Image();
+        image.src = './images/dj_pic.jpg';
+        image.onload = function () {
+            canvasBlur.height = THE_HEIGHT;
+            canvasBlur.width = THE_HEIGHT/image.height * image.width;
+            originCanvas.height = canvasBlur.height;
+            originCanvas.width = canvasBlur.width;
+            canvasDisplay.height = canvasBlur.height;
+            canvasDisplay.width  = canvasBlur.width;
+
+
+            contextOrigin.drawImage(image, 0 ,0, canvasBlur.width, canvasBlur.height)
+
+            drawBlurImage(contextBlur, contextOrigin, canvasBlur.width, canvasBlur.height)
+            displayx = parseInt(Math.random() * (canvasBlur.width - firstRaduis * 2)+firstRaduis);
+            displayy = parseInt(Math.random() * (canvasBlur.height - firstRaduis * 2)+firstRaduis);
+            drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
+        };
+
+        function drawBlurImage(context, originContext, imageDestWidth, imageDestHeight) {
+            var imageData = originContext.getImageData(0, 0, imageDestWidth, imageDestHeight);
+
+            for (var i = 0; i < imageDestHeight; i++) {
+                for (var j = 0; j < imageDestWidth; j++) {
+                    resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                }
+            }
+            context.putImageData(imageData, 0, 0);
+
+            function resetData(data, i, j, width, height) {
+                var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                    if (m < 0 || m >= height) {
+                        continue;
+                    }
+                    for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                        if (n < 0 || n >= width) {
+                            continue;
+                        }
+                        var positon = (m * width + n) * 4;
+                        temp.r += data[positon];
+                        temp.g += data[positon + 1];
+                        temp.b += data[positon + 2];
+                        temp.a += data[positon + 3];
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    var positonDest = (i * width + j) * 4;
+                    imageData.data[positonDest] = temp.r/count;
+                    imageData.data[positonDest + 1] = temp.g/count;
+                    imageData.data[positonDest + 2] =temp.b/count;
+                    imageData.data[positonDest + 3] =temp.a/count;
+                }
+            }
+
+        }
+
+        function drawDisplay(context, imageData, imageDestWidth, imageDestHeight) {
+
+            contextDisplay.clearRect(0, 0, canvasBlur.width, canvasBlur.height)
+            context.save();
+            context.beginPath();
+            context.arc(displayx, displayy, firstRaduis, 0, 2*Math.PI, false);
+            context.clip();
+            context.drawImage(imageData, 0, 0, imageDestWidth, imageDestHeight)
+            context.restore();
+        }
+
+        $('.btn_container .toukui').bind('click', function () {
+            firstRaduis = DISPLAY_RADUIS;
+            displayx = parseInt(Math.random() * (canvasBlur.width - firstRaduis * 2)+firstRaduis);
+            displayy = parseInt(Math.random() * (canvasBlur.height - firstRaduis * 2)+firstRaduis);
+            drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
+        });
+        $('.btn_container .xinshang').bind('click', function () {
+            var donghua = setInterval(function () {
+                firstRaduis += 20;
+                drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
+                if (firstRaduis > 800) {
+                    clearInterval(donghua);
+                }
+            },100);
+        });
+    }
 
 </script>
 </body>
