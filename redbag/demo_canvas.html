@@ -37,24 +37,48 @@
             line-height:40px;
             margin: 30px;
         }
+        select, #interval {
+            width: 100px;
+            height: 40px;
+            margin: 30px;
+            font-size: 1.8rem;
+        }
+        #interval {
+            width: 400px;
+        }
 
     </style>
 </head>
 <body>
 <canvas id="canvas_blur">
 </canvas>
-<canvas id="canvas_origin">
-</canvas>
 <canvas id="canvas_display">
 </canvas>
 <div class="btn_container">
     <div class="toukui">偷窥</div>
     <div class="xinshang">欣赏</div>
+    <select id="select_type">
+        <option value ="0">二维模糊</option>
+        <option value ="1">一维模糊</option>
+        <option value="2">二维高斯</option>
+        <option value="3" selected = "selected">一维高斯</option>
+    </select>
+    <p id="interval">
+    </p>
 </div>
 <script>
 
     window.onload=function () {
-        var BLUR_RADUIS = 15;
+        $('#select_type').change(function(){
+            var type = $(this).val();
+            $('#interval').text('正在计算，请等待！')
+            contextDisplay.clearRect(0, 0, canvasBlur.width, canvasBlur.height)
+            contextBlur.clearRect(0 ,0, canvasBlur.width, canvasBlur.height);
+            setTimeout(function () {
+                drawPic(type);
+            }, 100);
+        })
+        var BLUR_RADUIS = 40;
         var DISPLAY_RADUIS = 50;
         var firstRaduis = DISPLAY_RADUIS;
         var displayx,displayy;
@@ -72,66 +96,133 @@
         canvasDisplay.width = THE_WIDTH;
         var contextDisplay = canvasDisplay.getContext('2d');
 
-        var originCanvas = document.getElementById('canvas_origin');
-        originCanvas.height = THE_HEIGHT;
-        originCanvas.width = THE_WIDTH;
-        var contextOrigin = originCanvas.getContext('2d');
-
         var image = new Image();
         image.src = './images/dj_pic.jpg';
         image.onload = function () {
             canvasBlur.height = THE_HEIGHT;
             canvasBlur.width = THE_HEIGHT/image.height * image.width;
-            originCanvas.height = canvasBlur.height;
-            originCanvas.width = canvasBlur.width;
             canvasDisplay.height = canvasBlur.height;
             canvasDisplay.width  = canvasBlur.width;
+            drawPic();
+        };
 
-
-            contextOrigin.drawImage(image, 0 ,0, canvasBlur.width, canvasBlur.height)
-
-            drawBlurImage(contextBlur, contextOrigin, canvasBlur.width, canvasBlur.height)
+        function drawPic(type) {
+            contextBlur.drawImage(image, 0 ,0, canvasBlur.width, canvasBlur.height);
+            console.log('tkyj++2222222++'+type)
+            drawBlurImage(contextBlur, contextBlur, canvasBlur.width, canvasBlur.height, type);
             displayx = parseInt(Math.random() * (canvasBlur.width - firstRaduis * 2)+firstRaduis);
             displayy = parseInt(Math.random() * (canvasBlur.height - firstRaduis * 2)+firstRaduis);
             drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
-        };
 
-        function drawBlurImage(context, originContext, imageDestWidth, imageDestHeight) {
+        }
+
+        function drawBlurImage(context, originContext, imageDestWidth, imageDestHeight, type) {
             var imageData = originContext.getImageData(0, 0, imageDestWidth, imageDestHeight);
-
-            for (var i = 0; i < imageDestHeight; i++) {
-                for (var j = 0; j < imageDestWidth; j++) {
-                    resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
-                }
+            var temp = new Date().getTime();
+            var newData;
+            if (type == 0) {
+                newData =  getBlurData(imageData, imageDestWidth, imageDestHeight);
+            } else if (type == 1) {
+                newData =  getBlurData1(imageData, imageDestWidth, imageDestHeight);
+            } else if (type == 2) {
+                newData = gaussBlur(imageData, BLUR_RADUIS);
+            } else {
+                newData = gaussBlur1(imageData, BLUR_RADUIS);
             }
-            context.putImageData(imageData, 0, 0);
+            $('#interval').text('耗时'+(new Date().getTime() - temp)+'ms')
+            context.putImageData(newData, 0, 0);
 
-            function resetData(data, i, j, width, height) {
-                var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
-                for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
-                    if (m < 0 || m >= height) {
-                        continue;
+            function  getBlurData(imageData, imageDestWidth, imageDestHeight) {
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
                     }
-                    for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
-                        if (n < 0 || n >= width) {
+                }
+                return imageData;
+                function resetData(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                    for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                        if (m < 0 || m >= height) {
                             continue;
                         }
-                        var positon = (m * width + n) * 4;
+                        for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                            if (n < 0 || n >= width) {
+                                continue;
+                            }
+                            var positon = (m * width + n) * 4;
+                            temp.r += data[positon];
+                            temp.g += data[positon + 1];
+                            temp.b += data[positon + 2];
+                            temp.a += data[positon + 3];
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
+                }
+            }
+
+            function  getBlurData1(imageData, imageDestWidth, imageDestHeight) {
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData1(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                    }
+                }
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                    }
+                }
+                return imageData;
+                function resetData(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                        for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                            if (n < 0 || n >= width) {
+                                continue;
+                            }
+                            var positon = (i * width + n) * 4;
+                            temp.r += data[positon];
+                            temp.g += data[positon + 1];
+                            temp.b += data[positon + 2];
+                            temp.a += data[positon + 3];
+                            count++;
+                        }
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
+                }
+                function resetData1(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                    for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                        if (m < 0 || m >= height) {
+                            continue;
+                        }
+                        var positon = (m * width + j) * 4;
                         temp.r += data[positon];
                         temp.g += data[positon + 1];
                         temp.b += data[positon + 2];
                         temp.a += data[positon + 3];
                         count++;
                     }
-                }
-                if (count > 0) {
-                    var positonDest = (i * width + j) * 4;
-                    imageData.data[positonDest] = temp.r/count;
-                    imageData.data[positonDest + 1] = temp.g/count;
-                    imageData.data[positonDest + 2] =temp.b/count;
-                    imageData.data[positonDest + 3] =temp.a/count;
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
                 }
             }
+
 
         }
 
@@ -163,6 +254,173 @@
         });
     }
 
+    /**
+     * 此函数为二重循环
+     */
+    function gaussBlur(imgData, radius, sigma) {
+        var pixes = imgData.data,
+                width = imgData.width,
+                height = imgData.height;
+
+        radius = radius || 5;
+        sigma = sigma || radius / 3;
+
+        var gaussEdge = radius * 2 + 1;    // 高斯矩阵的边长
+
+        var gaussMatrix = [],
+                gaussSum = 0,
+                a = 1 / (2 * sigma * sigma * Math.PI),
+                b = -a * Math.PI;
+
+        for (var i=-radius; i<=radius; i++) {
+            for (var j=-radius; j<=radius; j++) {
+                var gxy = a * Math.exp((i * i + j * j) * b);
+                gaussMatrix.push(gxy);
+                gaussSum += gxy;    // 得到高斯矩阵的和，用来归一化
+            }
+        }
+        var gaussNum = (radius + 1) * (radius + 1);
+        for (var i=0; i<gaussNum; i++) {
+            gaussMatrix[i] = gaussMatrix[i] / gaussSum;    // 除gaussSum是归一化
+        }
+
+        //console.log(gaussMatrix);
+
+        // 循环计算整个图像每个像素高斯处理之后的值
+        for (var x=0; x<width;x++) {
+            for (var y=0; y<height; y++) {
+                var r = 0,
+                        g = 0,
+                        b = 0;
+
+                //console.log(1);
+
+                // 计算每个点的高斯处理之后的值
+                for (var i=-radius; i<=radius; i++) {
+                    // 处理边缘
+                    var m = handleEdge(i, x, width);
+                    for (var j=-radius; j<=radius; j++) {
+                        // 处理边缘
+                        var mm = handleEdge(j, y, height);
+
+                        var currentPixId = (mm * width + m) * 4;
+
+                        var jj = j + radius;
+                        var ii = i + radius;
+                        r += pixes[currentPixId] * gaussMatrix[jj * gaussEdge + ii];
+                        g += pixes[currentPixId + 1] * gaussMatrix[jj * gaussEdge + ii];
+                        b += pixes[currentPixId + 2] * gaussMatrix[jj * gaussEdge + ii];
+
+                    }
+                }
+                var pixId = (y * width + x) * 4;
+
+                pixes[pixId] = ~~r;
+                pixes[pixId + 1] = ~~g;
+                pixes[pixId + 2] = ~~b;
+            }
+        }
+        imgData.data = pixes;
+        return imgData;
+    }
+
+
+    function handleEdge(i, x, w) {
+        var  m = x + i;
+        if (m < 0) {
+            m = -m;
+        } else if (m >= w) {
+            m = w + i - x;
+        }
+        return m;
+    }
+
+    /**
+     * 此函数为分别循环
+     */
+    function gaussBlur1(imgData,radius, sigma) {
+        var pixes = imgData.data;
+        var width = imgData.width;
+        var height = imgData.height;
+        var gaussMatrix = [],
+                gaussSum = 0,
+                x, y,
+                r, g, b, a,
+                i, j, k, len;
+
+
+        radius = Math.floor(radius) || 3;
+        sigma = sigma || radius / 3;
+
+        a = 1 / (Math.sqrt(2 * Math.PI) * sigma);
+        b = -1 / (2 * sigma * sigma);
+        //生成高斯矩阵
+        for (i = 0, x = -radius; x <= radius; x++, i++){
+            g = a * Math.exp(b * x * x);
+            gaussMatrix[i] = g;
+            gaussSum += g;
+
+        }
+        //归一化, 保证高斯矩阵的值在[0,1]之间
+        for (i = 0, len = gaussMatrix.length; i < len; i++) {
+            gaussMatrix[i] /= gaussSum;
+        }
+        //x 方向一维高斯运算
+        for (y = 0; y < height; y++) {
+            for (x = 0; x < width; x++) {
+                r = g = b = a = 0;
+                gaussSum = 0;
+                for(j = -radius; j <= radius; j++){
+                    k = x + j;
+                    if(k >= 0 && k < width){//确保 k 没超出 x 的范围
+                        //r,g,b,a 四个一组
+                        i = (y * width + k) * 4;
+                        r += pixes[i] * gaussMatrix[j + radius];
+                        g += pixes[i + 1] * gaussMatrix[j + radius];
+                        b += pixes[i + 2] * gaussMatrix[j + radius];
+                        // a += pixes[i + 3] * gaussMatrix[j];
+                        gaussSum += gaussMatrix[j + radius];
+                    }
+                }
+                i = (y * width + x) * 4;
+                // 除以 gaussSum 是为了消除处于边缘的像素, 高斯运算不足的问题
+                // console.log(gaussSum)
+                pixes[i] = r / gaussSum;
+                pixes[i + 1] = g / gaussSum;
+                pixes[i + 2] = b / gaussSum;
+                // pixes[i + 3] = a ;
+            }
+        }
+        //y 方向一维高斯运算
+        for (x = 0; x < width; x++) {
+            for (y = 0; y < height; y++) {
+                r = g = b = a = 0;
+                gaussSum = 0;
+                for(j = -radius; j <= radius; j++){
+                    k = y + j;
+                    if(k >= 0 && k < height){//确保 k 没超出 y 的范围
+                        i = (k * width + x) * 4;
+                        r += pixes[i] * gaussMatrix[j + radius];
+                        g += pixes[i + 1] * gaussMatrix[j + radius];
+                        b += pixes[i + 2] * gaussMatrix[j + radius];
+                        // a += pixes[i + 3] * gaussMatrix[j];
+                        gaussSum += gaussMatrix[j + radius];
+                    }
+                }
+                i = (y * width + x) * 4;
+                pixes[i] = r / gaussSum;
+                pixes[i + 1] = g / gaussSum;
+                pixes[i + 2] = b / gaussSum;
+                // pixes[i] = r ;
+                // pixes[i + 1] = g ;
+                // pixes[i + 2] = b ;
+                // pixes[i + 3] = a ;
+            }
+        }
+        //end
+        imgData.data = pixes;
+        return imgData;
+    }
 </script>
 </body>
 </html>
