@@ -6,8 +6,8 @@
      xmlns:ev="http://www.w3.org/2001/xml-events"
      baseProfile="full">
     <defs>
-        <filter id="blur">
-            <feGaussianBlur stdDeviation="20" />
+        <filter id="blur"  x="0" y="0">
+            <feGaussianBlur stdDeviation="10" />
         </filter>
     </defs>
 </svg>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script type="text/javascript" src="../scripts/jQuery.js"></script>
+    <title>Jie Dong</title>
+    <style>
+        .ruoter_test_text {
+            height: 10rem;
+            font-size: 200%;
+            margin: auto;
+            text-align: center;
+            color: #713dfd;
+            margin-top: 3rem;
+        }
+
+        .btn_route {
+            height: 2rem;
+            line-height: 2rem;
+            margin: 0 1rem;
+            width: 8rem;
+            text-align: center;
+            display: inline-block;
+            border: 1px #e0e0e0 solid;
+            background: #12b7f5;
+            color: #fff;
+        }
+
+        .button_container {
+            margin-left: calc(50% - 25rem);
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .resetBtn {
+            height: 3rem;
+            width: 9rem;
+            line-height: 3rem;
+            text-align: center;
+            background: #12b7f5;
+            color: #fff;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="resetBtn" onclick="resetClick()">重置</div>
+<div class="ruoter_test_text">
+    default...
+</div>
+<span class="button_container btn_path">
+    <span>路径形式</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-groups</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-robots</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-features</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-helps</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-vips</span>
+</span>
+
+<span class="button_container btn_param">
+    <span>参数形式</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-groups</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-robots</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-features</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-helps</span>
+    <span class="btn_route" onclick="clickBtng(this)">btn-vips</span>
+</span>
+<script type="text/javascript">
+
+
+
+    window.wyRouter = {
+        routerSet: [],
+        addRoute: function (path, handle) {
+            this.routerSet.push({
+                path,
+                handle
+            });
+        },
+
+        execute: function (path, state) {
+            wyRouter.routerSet.forEach(function (item, index) {
+                if (item.path == path) {
+                    item.handle.apply(null, [{path: path, state: state}]);
+                    return true;
+                }
+                return false;
+            });
+        },
+        addHistoryRecord: function (state, title, url) {
+            history.pushState(state, title, url);
+        }
+    };
+
+    var clickBackCallBack = function clickBackCallBack(params) {
+        $('.ruoter_test_text').text('我们回到' + params.path + '--' + params.state);
+    };
+
+    function resetClick() {
+        var url = window.location.href;
+        var path = getParameterByName('path');
+        if (path) {
+            url = url.split('?')[0];
+        } else {
+            var hrefTemp = url.split('/');
+            hrefTemp.pop();
+            url = hrefTemp.join('/');
+        }
+        window.location.replace(url);
+    }
+
+    function clickBtng(element) {
+        var text = $(element).text().split('-');
+        $('.ruoter_test_text').text('我们来到' + text[1]);
+        var state = '';
+        switch (text[1]) {
+            case 'groups':
+            {
+                state = '群组';
+                break;
+            }
+            case 'robots':
+            {
+                state = '机器人';
+                break;
+            }
+            case 'features':
+            {
+                state = '功能';
+                break;
+            }
+            case 'helps':
+            {
+                state = '帮助';
+                break;
+            }
+            case 'vips':
+            {
+                state = '贵宾';
+                break;
+            }
+        }
+        if ($(element).parent().hasClass('btn_path')) {
+            var hrefTemp = window.location.href.split('/');
+            hrefTemp.pop();
+            wyRouter.addHistoryRecord(state, '标题' + element, hrefTemp.join('/') + '/' + text[1])
+        } else {
+            var url = window.location.href.split('?')[0] + '?path=' + text[1];
+            wyRouter.addHistoryRecord(state, '标题' + element, url)
+        }
+    }
+    var initRoute = function () {
+        window.addEventListener("popstate", function () {
+            var url = window.location.href;
+            var path = getParameterByName('path');
+            if (!path) {
+                path = url.split('/');
+                path = path[path.length - 1];
+            }
+            wyRouter.execute(path, history.state);
+        });
+        wyRouter.addRoute('groups', clickBackCallBack);
+        wyRouter.addRoute('robots', clickBackCallBack);
+        wyRouter.addRoute('features', clickBackCallBack);
+        wyRouter.addRoute('helps', clickBackCallBack);
+        wyRouter.addRoute('vips', clickBackCallBack);
+    };
+    var getParameterByName = function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(window.location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
+
+    initRoute();
+
+</script>
+</body>
+</html>

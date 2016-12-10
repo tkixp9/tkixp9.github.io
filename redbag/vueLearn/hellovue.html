@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <script src="http://static.runoob.com/assets/vue/1.0.11/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    {{message}}
+</div>
+<div id="app1">
+    <p>{{ message1 | capitalize }}</p>
+    <input v-model="message1">
+    <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue.js!'
+        }
+    })
+    new Vue({
+        el: '#app1',
+        data: {
+            message1: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message1 = this.message1.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+</body>
+</html>

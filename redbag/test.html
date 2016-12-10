@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Red bag</title>
+    <script src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 320px;
+            margin: 10px auto;
+            background: #ddd;
+            position: relative;
+        }
+
+        h2 {
+            position: relative;
+            line-height: 30px;
+            margin: 10px 0;
+        }
+
+        p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            color: #f00;
+        }
+
+        .pesudo {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            top: 0;
+            background: #ddd;
+            text-align: center;
+            color: #00f;
+        }
+
+    </style>
+</head>
+<body>
+<<!-- 单行居中显示文字，多行居左显示，最多两行超过用省略号结尾 -->
+<div class="container">
+    <h2>
+        <p>我是单行标题居中</p>
+        <p class="pesudo">我是单行标题居中</p>
+    </h2>
+
+    <h2>
+        <p>我是两行标题两行标题两行标题居左</p>
+        <p class="pesudo">我是两行标题两行标题两行标题居左</p>
+    </h2>
+
+    <h2>
+        <p>我是超过两行的标题最后点号省略我是超过两行的标题最后点号省略</p>
+        <p class="pesudo">我是超过两行的标题最后点号省略我是超过两行的标题最后点号省略</p>
+    </h2>
+</div>
+<script>
+
+    window.onload=function () {
+        $('#select_type').change(function(){
+            var type = $(this).val();
+            $('#interval').text('正在计算，请等待！')
+            contextDisplay.clearRect(0, 0, canvasBlur.width, canvasBlur.height)
+            contextBlur.clearRect(0 ,0, canvasBlur.width, canvasBlur.height);
+            setTimeout(function () {
+                drawPic(type);
+            }, 100);
+        })
+        var BLUR_RADUIS = 40;
+        var DISPLAY_RADUIS = 50;
+        var firstRaduis = DISPLAY_RADUIS;
+        var displayx,displayy;
+
+        var THE_WIDTH = document.documentElement.clientWidth * 0.1;
+        var THE_HEIGHT = document.documentElement.clientHeight * 0.8;
+
+        var canvasBlur = document.getElementById('canvas_blur');
+        canvasBlur.height = THE_HEIGHT;
+        canvasBlur.width = THE_WIDTH;
+        var contextBlur = canvasBlur.getContext('2d');
+
+        var canvasDisplay = document.getElementById('canvas_display');
+        canvasDisplay.height = THE_HEIGHT;
+        canvasDisplay.width = THE_WIDTH;
+        var contextDisplay = canvasDisplay.getContext('2d');
+
+        var image = new Image();
+        image.src = './images/dj_pic.jpg';
+        image.onload = function () {
+            canvasBlur.height = THE_HEIGHT;
+            canvasBlur.width = THE_HEIGHT/image.height * image.width;
+            canvasDisplay.height = canvasBlur.height;
+            canvasDisplay.width  = canvasBlur.width;
+            drawPic();
+        };
+
+        function drawPic(type) {
+            contextBlur.drawImage(image, 0 ,0, canvasBlur.width, canvasBlur.height);
+            console.log('tkyj++2222222++'+type)
+            displayx = parseInt(Math.random() * (canvasBlur.width - firstRaduis * 2)+firstRaduis);
+            displayy = parseInt(Math.random() * (canvasBlur.height - firstRaduis * 2)+firstRaduis);
+            drawBlurImage(contextBlur, contextBlur, canvasBlur.width, canvasBlur.height, type);
+            var imageData = contextBlur.getImageData(0, 0, canvasBlur.width, canvasBlur.height);
+            var tmp = firstRaduis * firstRaduis;
+            /*for (var i = 0; i < canvasBlur.height; i++) {
+                for (var j = 0; j < canvasBlur.width; j++) {
+                    if (containedInDest(i, j, displayx, displayy, tmp )) {
+                        console.log(';i='+i+';j='+j+';displayx='+displayx+';displayy='+displayy+';tmp='+tmp)
+                    } else {
+                        imageData.data[(i*canvasBlur.width+j)*4 + 3] = 0;
+                    }
+                }
+            }*/
+            //contextDisplay.putImageData(imageData, 0, 0);
+
+        }
+
+        function drawBlurImage(context, originContext, imageDestWidth, imageDestHeight, type) {
+            var imageData = originContext.getImageData(0, 0, imageDestWidth, imageDestHeight);
+            var temp = new Date().getTime();
+            var newData;
+            if (type == 0) {
+                newData =  getBlurData(imageData, imageDestWidth, imageDestHeight);
+            } else if (type == 1) {
+                newData =  getBlurData1(imageData, imageDestWidth, imageDestHeight);
+            } else if (type == 2) {
+                newData = gaussBlur(imageData, BLUR_RADUIS);
+            } else {
+                newData = gaussBlur1(imageData, BLUR_RADUIS);
+            }
+            $('#interval').text('耗时'+(new Date().getTime() - temp)+'ms')
+            context.putImageData(newData, 0, 0);
+
+            function  getBlurData(imageData, imageDestWidth, imageDestHeight) {
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                    }
+                }
+                return imageData;
+                function resetData(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                    for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                        if (m < 0 || m >= height) {
+                            continue;
+                        }
+                        for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                            if (n < 0 || n >= width) {
+                                continue;
+                            }
+                            var positon = (m * width + n) * 4;
+                            temp.r += data[positon];
+                            temp.g += data[positon + 1];
+                            temp.b += data[positon + 2];
+                            temp.a += data[positon + 3];
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
+                }
+            }
+
+            function  getBlurData1(imageData, imageDestWidth, imageDestHeight) {
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData1(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                    }
+                }
+                for (var i = 0; i < imageDestHeight; i++) {
+                    for (var j = 0; j < imageDestWidth; j++) {
+                        resetData(imageData.data, i, j, imageDestWidth, imageDestHeight);
+                    }
+                }
+                return imageData;
+                function resetData(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                    for(var n = j - BLUR_RADUIS; n < j + BLUR_RADUIS; n++) {
+                        if (n < 0 || n >= width) {
+                            continue;
+                        }
+                        var positon = (i * width + n) * 4;
+                        temp.r += data[positon];
+                        temp.g += data[positon + 1];
+                        temp.b += data[positon + 2];
+                        temp.a += data[positon + 3];
+                        count++;
+                    }
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
+                }
+                function resetData1(data, i, j, width, height) {
+                    var temp = {r: 0, g: 0, b: 0, a: 0}, count = 0;
+                    for (var m = i - BLUR_RADUIS;m < i + BLUR_RADUIS; m++) {
+                        if (m < 0 || m >= height) {
+                            continue;
+                        }
+                        var positon = (m * width + j) * 4;
+                        temp.r += data[positon];
+                        temp.g += data[positon + 1];
+                        temp.b += data[positon + 2];
+                        temp.a += data[positon + 3];
+                        count++;
+                    }
+                    if (count > 0) {
+                        var positonDest = (i * width + j) * 4;
+                        imageData.data[positonDest] = temp.r/count;
+                        imageData.data[positonDest + 1] = temp.g/count;
+                        imageData.data[positonDest + 2] =temp.b/count;
+                        imageData.data[positonDest + 3] =temp.a/count;
+                    }
+                }
+            }
+
+
+        }
+
+        function drawDisplay(context, imageData, imageDestWidth, imageDestHeight) {
+
+            contextDisplay.clearRect(0, 0, canvasBlur.width, canvasBlur.height)
+            context.save();
+            context.beginPath();
+            context.arc(displayx, displayy, firstRaduis, 0, 2*Math.PI, false);
+            context.clip();
+            context.drawImage(imageData, 0, 0, imageDestWidth, imageDestHeight)
+            context.restore();
+        }
+
+        $('.btn_container .toukui').bind('click', function () {
+            firstRaduis = DISPLAY_RADUIS;
+            displayx = parseInt(Math.random() * (canvasBlur.width - firstRaduis * 2)+firstRaduis);
+            displayy = parseInt(Math.random() * (canvasBlur.height - firstRaduis * 2)+firstRaduis);
+            drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
+        });
+        $('.btn_container .xinshang').bind('click', function () {
+            var donghua = setInterval(function () {
+                firstRaduis += 20;
+                drawDisplay(contextDisplay, image, canvasBlur.width, canvasBlur.height);
+                if (firstRaduis > 800) {
+                    clearInterval(donghua);
+                }
+            },100);
+        });
+
+        /**
+         * 此函数为二重循环
+         */
+        function gaussBlur(imgData, radius, sigma) {
+            var pixes = imgData.data,
+                    width = imgData.width,
+                    height = imgData.height;
+
+            radius = radius || 5;
+            sigma = sigma || radius / 3;
+
+            var gaussEdge = radius * 2 + 1;    // 高斯矩阵的边长
+
+            var gaussMatrix = [],
+                    gaussSum = 0,
+                    a = 1 / (2 * sigma * sigma * Math.PI),
+                    b = -a * Math.PI;
+
+            for (var i=-radius; i<=radius; i++) {
+                for (var j=-radius; j<=radius; j++) {
+                    var gxy = a * Math.exp((i * i + j * j) * b);
+                    gaussMatrix.push(gxy);
+                    gaussSum += gxy;    // 得到高斯矩阵的和，用来归一化
+                }
+            }
+            var gaussNum = (radius + 1) * (radius + 1);
+            for (var i=0; i<gaussNum; i++) {
+                gaussMatrix[i] = gaussMatrix[i] / gaussSum;    // 除gaussSum是归一化
+            }
+
+            //console.log(gaussMatrix);
+
+            // 循环计算整个图像每个像素高斯处理之后的值
+            for (var x=0; x<width;x++) {
+                for (var y=0; y<height; y++) {
+                    var r = 0,
+                            g = 0,
+                            b = 0;
+
+                    //console.log(1);
+
+                    // 计算每个点的高斯处理之后的值
+                    for (var i=-radius; i<=radius; i++) {
+                        // 处理边缘
+                        var m = handleEdge(i, x, width);
+                        for (var j=-radius; j<=radius; j++) {
+                            // 处理边缘
+                            var mm = handleEdge(j, y, height);
+
+                            var currentPixId = (mm * width + m) * 4;
+
+                            var jj = j + radius;
+                            var ii = i + radius;
+                            r += pixes[currentPixId] * gaussMatrix[jj * gaussEdge + ii];
+                            g += pixes[currentPixId + 1] * gaussMatrix[jj * gaussEdge + ii];
+                            b += pixes[currentPixId + 2] * gaussMatrix[jj * gaussEdge + ii];
+
+                        }
+                    }
+                    var pixId = (y * width + x) * 4;
+
+                    pixes[pixId] = ~~r;
+                    pixes[pixId + 1] = ~~g;
+                    pixes[pixId + 2] = ~~b;
+                }
+            }
+            imgData.data = pixes;
+            return imgData;
+        }
+
+
+        function handleEdge(i, x, w) {
+            var  m = x + i;
+            if (m < 0) {
+                m = -m;
+            } else if (m >= w) {
+                m = w + i - x;
+            }
+            return m;
+        }
+
+        /**
+         * 此函数为分别循环
+         */
+        function gaussBlur1(imgData,radius, sigma) {
+            var pixes = imgData.data;
+            var width = imgData.width;
+            var height = imgData.height;
+            var tmp = radius * radius;
+            var gaussMatrix = [],
+                    gaussSum = 0,
+                    x, y,
+                    r, g, b, a,
+                    i, j, k, len;
+
+
+            radius = Math.floor(radius) || 3;
+            sigma = sigma || radius / 3;
+
+            a = 1 / (Math.sqrt(2 * Math.PI) * sigma);
+            b = -1 / (2 * sigma * sigma);
+            //生成高斯矩阵
+            for (i = 0, x = -radius; x <= radius; x++, i++){
+                g = a * Math.exp(b * x * x);
+                gaussMatrix[i] = g;
+                gaussSum += g;
+
+            }
+            //归一化, 保证高斯矩阵的值在[0,1]之间
+            for (i = 0, len = gaussMatrix.length; i < len; i++) {
+                gaussMatrix[i] /= gaussSum;
+            }
+            //x 方向一维高斯运算
+            for (y = 0; y < height; y++) {
+                for (x = 0; x < width; x++) {
+                    if (containedInDest(x, y, displayx, displayy, tmp )) {
+                        //pixes[(y*width+x)*4 + 2] = 255;
+                        console.log('y='+y+';x='+x+';displayx='+displayy +'fi='+firstRaduis);
+                        continue;
+                    }
+                    //console.log('xx='+x+'yyy='+y+';tmp='+tmp)
+                    r = g = b = a = 0;
+                    gaussSum = 0;
+                    for(j = -radius; j <= radius; j++){
+                        k = x + j;
+                        if(k >= 0 && k < width){//确保 k 没超出 x 的范围
+                            //r,g,b,a 四个一组
+                            i = (y * width + k) * 4;
+                            r += pixes[i] * gaussMatrix[j + radius];
+                            g += pixes[i + 1] * gaussMatrix[j + radius];
+                            b += pixes[i + 2] * gaussMatrix[j + radius];
+                            // a += pixes[i + 3] * gaussMatrix[j];
+                            gaussSum += gaussMatrix[j + radius];
+                        }
+                    }
+                    i = (y * width + x) * 4;
+                    // 除以 gaussSum 是为了消除处于边缘的像素, 高斯运算不足的问题
+                    // console.log(gaussSum)
+                    pixes[i] = r / gaussSum;
+                    pixes[i + 1] = g / gaussSum;
+                    pixes[i + 2] = b / gaussSum;
+                    // pixes[i + 3] = a ;
+                }
+            }
+            //y 方向一维高斯运算
+            for (x = 0; x < width; x++) {
+                for (y = 0; y < height; y++) {
+                    if (containedInDest(x, y, displayx, displayy, tmp )) {
+                        //pixes[(y*width+x)*4 + 2] = 255;
+                        continue;
+                    }
+                    r = g = b = a = 0;
+                    gaussSum = 0;
+                    for(j = -radius; j <= radius; j++) {
+                        k = y + j;
+                        if(k >= 0 && k < height){//确保 k 没超出 y 的范围
+                            i = (k * width + x) * 4;
+                            r += pixes[i] * gaussMatrix[j + radius];
+                            g += pixes[i + 1] * gaussMatrix[j + radius];
+                            b += pixes[i + 2] * gaussMatrix[j + radius];
+                            // a += pixes[i + 3] * gaussMatrix[j];
+                            gaussSum += gaussMatrix[j + radius];
+                        }
+                    }
+                    i = (y * width + x) * 4;
+                    pixes[i] = r / gaussSum;
+                    pixes[i + 1] = g / gaussSum;
+                    pixes[i + 2] = b / gaussSum;
+                    // pixes[i] = r ;
+                    // pixes[i + 1] = g ;
+                    // pixes[i + 2] = b ;
+                    // pixes[i + 3] = a ;
+                }
+            }
+            //end
+            imgData.data = pixes;
+            return imgData;
+        }
+
+        function containedInDest(i, j, displayx, displayy, firstRaduis2) {
+            return (displayx - i) * (displayx - i) + (displayy - j) * (displayy - j) < firstRaduis2;
+        }
+    }
+
+
+</script>
+</body>
+</html>
