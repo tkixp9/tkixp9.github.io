@@ -81,7 +81,7 @@
         },
 
         execute: function (path, state) {
-            wyRouter.routerSet.forEach(function (item, index) {
+            this.routerSet.forEach(function (item, index) {
                 if (item.path == path) {
                     item.handle.apply(null, [{path: path, state: state}]);
                     return true;
@@ -145,18 +145,17 @@
         if ($(element).parent().hasClass('btn_path')) {
             var hrefTemp = window.location.href.split('/');
             hrefTemp.pop();
-            wyRouter.addHistoryRecord(state, '标题' + element, hrefTemp.join('/') + '/' + text[1])
+            wyRouter.addHistoryRecord(state, 'title_ignore', hrefTemp.join('/') + '/' + text[1])
         } else {
             var url = window.location.href.split('?')[0] + '?path=' + text[1];
-            wyRouter.addHistoryRecord(state, '标题' + element, url)
+            wyRouter.addHistoryRecord(state, 'title_ignore', url)
         }
     }
     var initRoute = function () {
         window.addEventListener("popstate", function () {
-            var url = window.location.href;
             var path = getParameterByName('path');
             if (!path) {
-                path = url.split('/');
+                path = window.location.href.split('/');
                 path = path[path.length - 1];
             }
             wyRouter.execute(path, history.state);
