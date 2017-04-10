@@ -37,13 +37,19 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     window.scroll(0, 0);
 
-    if (!store.state.user.userinfo.token && to.path !== '/login') {
-        store.dispatch('remove_userinfo');
-        next('/login');
-    } else {
-        if (store.state.user.userinfo.token && to.path === '/login') {
+  console.log('tkyj++++11111++'+JSON.stringify(store.getters.getToken | 'xxxx'));
+
+  console.log('tkyj++++++'+JSON.stringify(new Date().getTime()));
+  var tokenInterval = new Date().getTime() - store.getters.getToken;
+  var validateToken = tokenInterval > 0 && tokenInterval < 24 * 60 * 60 * 1000;
+  console.log('tkyj+++xxxxxxx+++'+JSON.stringify(tokenInterval));
+  if (!validateToken && to.path !== '/login') {
+    store.dispatch('remove_userinfo');
+    next('/login');
+  }else {
+        if (validateToken && to.path === '/login') {
             next({
-                path: '/demo/user/list'
+                path: '/wh/statistics/overview'
             });
         } else {
             NProgress.start();

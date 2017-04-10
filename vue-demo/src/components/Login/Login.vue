@@ -13,13 +13,13 @@
                         <h3 class="title">系统登录</h3>
                         <el-form-item
                             prop='username'>
-                            <el-input type="text" auto-complete="off" placeholder="账号" 
+                            <el-input type="text" auto-complete="off" placeholder="账号"
                                 v-model='data.username'
                                 @keyup.native.enter="login('data')"></el-input>
                         </el-form-item>
                         <el-form-item
                             prop='password'>
-                            <el-input type="password" auto-complete="off" placeholder="密码" 
+                            <el-input type="password" auto-complete="off" placeholder="密码"
                                 v-model='data.password'
                                 @keyup.native.enter="login('data')"></el-input>
                         </el-form-item>
@@ -64,8 +64,8 @@
         }
 
          .loginform {
-            width: 350px;
+            width: 500px;
             padding: 35px 35px 15px 35px;
-        } 
+        }
     }
 </style>

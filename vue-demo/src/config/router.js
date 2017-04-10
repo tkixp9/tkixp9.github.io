@@ -6,7 +6,6 @@ import {
     Modules
 } from '../components/';
 
-console.log(Modules);
 
 module.exports = [{
     path: '/',
@@ -27,86 +26,37 @@ module.exports = [{
         component: NotFound
     }]
 }, {
-    path: '/function',
-    name: '功能模块',
+    path: '/wh',
+    name: '微友助手',
     icon: 'inbox',
     component: Home,
     children: [{
         hidden: true,
         path: '',
         redirect: to => {
-            return 'open'
+            return 'statistics'
         }
     }, {
-        path: 'open',
-        name: '公共内容',
+        path: 'statistics',
+        name: '统计数据',
         icon: 'inbox',
         component: Content,
         children: [{
             hidden: true,
             path: '',
             redirect: to => {
-                return 'echarts'
+                return 'overview'
             }
         }, {
-            path: 'echarts',
-            name: '图表',
-            icon: 'bar-chart',
-            component: Modules.Function.Open.Echarts
-        }, {
-            path: 'list',
-            name: '列表',
+            path: 'overview',
+            name: '数据总览',
             icon: 'reorder',
-            component: Modules.Function.Open.List
-        }, {
-            path: 'form',
-            name: '表单',
-            icon: 'edit',
-            component: Modules.Function.Open.Form
-        }, {
-            path: 'vuex',
-            name: 'Vuex',
-            icon: 'window-restore',
-            component: Modules.Function.Open.Vuex
-        }, {
-            path: 'test404',
-            name: '测试404',
-            icon: 'window-restore',
-            component: Modules.Function.Open.Test404
-        }]
-    }]
-}, {
-    path: '/demo',
-    name: '演示模块',
-    icon: 'inbox',
-    component: Home,
-    children: [{
-        hidden: true,
-        path: '',
-        redirect: to => {
-            return 'user'
-        }
-    }, {
-        path: 'user',
-        name: '用户管理',
-        icon: 'inbox',
-        component: Content,
-        children: [{
-            hidden: true,
-            path: '',
-            redirect: to => {
-                return 'list'
-            }
-        }, {
-            path: 'list',
-            name: '用户列表',
-            icon: 'reorder',
-            component: Modules.Demo.User.List
+            component: Modules.Wh.Statistics.Overview
         }, {
             path: 'edit',
             name: '编辑用户',
             icon: 'edit',
-            component: Modules.Demo.User.Edit
+            component: Modules.Wh.Statistics.Edit
         }]
     }, {
         path: 'article',
@@ -123,12 +73,12 @@ module.exports = [{
             path: 'list',
             name: '文章列表',
             icon: 'reorder',
-            component: Modules.Demo.Article.List
+            component: Modules.Wh.Article.List
         }, {
             path: 'edit',
             name: '编辑文章',
             icon: 'edit',
-            component: Modules.Demo.Article.Edit
+            component: Modules.Wh.Article.Edit
         }]
     }, {
         path: 'order',
@@ -145,12 +95,12 @@ module.exports = [{
             path: 'list',
             name: '订单列表',
             icon: 'reorder',
-            component: Modules.Demo.Order.List
+            component: Modules.Wh.Order.List
         }, {
             path: 'edit',
             name: '编辑订单',
             icon: 'edit',
-            component: Modules.Demo.Order.Edit
+            component: Modules.Wh.Order.Edit
         }]
     }, {
         path: 'orderstatis',
@@ -167,14 +117,63 @@ module.exports = [{
             path: 'bar',
             name: '柱状图',
             icon: 'reorder',
-            component: Modules.Demo.OrderStatis.Bar
+            component: Modules.Wh.OrderStatis.Bar
         }, {
             path: 'pie',
             name: '饼状图',
             icon: 'edit',
-            component: Modules.Demo.OrderStatis.Pie
+            component: Modules.Wh.OrderStatis.Pie
         }]
     }]
+},{
+  path: '/function',
+  name: '功能模块',
+  icon: 'inbox',
+  component: Home,
+  children: [{
+    hidden: true,
+    path: '',
+    redirect: to => {
+      return 'open'
+    }
+  }, {
+    path: 'open',
+    name: '公共内容',
+    icon: 'inbox',
+    component: Content,
+    children: [{
+      hidden: true,
+      path: '',
+      redirect: to => {
+        return 'echarts'
+      }
+    }, {
+      path: 'echarts',
+      name: '图表',
+      icon: 'bar-chart',
+      component: Modules.Function.Open.Echarts
+    }, {
+      path: 'list',
+      name: '列表',
+      icon: 'reorder',
+      component: Modules.Function.Open.List
+    }, {
+      path: 'form',
+      name: '表单',
+      icon: 'edit',
+      component: Modules.Function.Open.Form
+    }, {
+      path: 'vuex',
+      name: 'Vuex',
+      icon: 'window-restore',
+      component: Modules.Function.Open.Vuex
+    }, {
+      path: 'test404',
+      name: '测试404',
+      icon: 'window-restore',
+      component: Modules.Function.Open.Test404
+    }]
+  }]
 }, {
     path: '/adv',
     name: '再次封装',

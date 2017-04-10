@@ -11,9 +11,5 @@ module.exports = {
 	//后期：每次登录成功一次，就缓存到列表中，然后在登录表单，输入时，会出现下拉列表选择之前登录过得用户
 	remumber: {
 		remumber_flag: store.get('remumber_flag') ? true : false,
-		remumber_login_info: store.get('remumber_login_info') || {
-			username: '',
-			token: ''
-		}
 	},
 };
