@@ -1,7 +1,7 @@
 import {
     user as UserApi
 } from '../../config/request.js';
-import Md5 from '../../util/MD5';
+import Md5 from '../../libs/MD5';
 
 module.exports = {
     name: 'login',

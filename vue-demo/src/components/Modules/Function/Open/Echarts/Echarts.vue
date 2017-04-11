@@ -21,5 +21,5 @@
     module.exports=EchartsJs;
 </script>
 <style scoped>
-    
+
 </style>

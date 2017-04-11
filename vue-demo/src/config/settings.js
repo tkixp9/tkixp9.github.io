@@ -38,9 +38,13 @@ var settings = {
 		 * ajax请求网络出错时调用
 		 */
 		requestError(err) {
+      var msg = '请求错误：';
+      if (err && err.response) {
+        msg += err.response.status + ',' + err.response.statusText
+      }
 			this.$message({
 				showClose: true,
-				message: '请求错误：' + err.response.status + ',' + err.response.statusText,
+				message: msg ,
 				type: 'error'
 			});
 		}

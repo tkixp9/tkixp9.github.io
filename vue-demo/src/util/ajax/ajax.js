@@ -11,7 +11,7 @@ import {
 } from 'config/settings.js';
 
 // 动态设置本地和线上接口域名
-Vue.axios.defaults.baseURL = gbs.host;
+Vue.axios.defaults.baseURL = 'http://admin.weiyoubot.com/console/api'//gbs.host;
 
 /**
  * 封装axios的通用请求
@@ -23,12 +23,12 @@ Vue.axios.defaults.baseURL = gbs.host;
  */
 module.exports = function(type, url, data, fn, tokenFlag, errFn) {
 
-	// 分发显示加载样式任务
-	this.$store.dispatch('show_loading');
+// 分发显示加载样式任务
+	 this.$store.dispatch('show_loading');
 
-	if (tokenFlag !== true) {
-		data.token = this.$store.state.user.userinfo.token;
-	}
+	// if (tokenFlag !== true) {
+	// 	data.token = this.$store.state.user.userinfo.token;
+	// }
 
 	if (type === 'get') {
 		var datas = {
@@ -37,11 +37,10 @@ module.exports = function(type, url, data, fn, tokenFlag, errFn) {
 	} else {
 		var datas = data;
 	}
-
 	Vue.axios[type](url, datas).then((res) => {
-		if (res.data.status === 200) {
-			// console.dir(res.data);
-			fn(res.data.data);
+    if (res.status === 200) {
+      // console.dir(res.data);
+			fn(res.data);
 		} else {
 
 			// 调用全局配置错误回调
