@@ -14,7 +14,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="">>>使用人的维度</span>
+        <span style="">>> 使用人的维度</span>
       </div>
       <div id="overview-user-count">
       </div>
@@ -35,7 +35,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="">>>群的维度</span>
+        <span style="">>> 群的维度</span>
       </div>
       <div id="overview-group-managed">
       </div>
@@ -55,7 +55,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="">>>群友的维度</span>
+        <span style="">>> 群友的维度</span>
       </div>
       <div id="overview-members-count">
       </div>
@@ -79,27 +79,3 @@
   import OverviewJs from './Overview.js';
   module.exports = OverviewJs;
 </script>
-<style lang='less'>
-  .el-table th {
-    text-align: center;
-  }
-
-  table {
-    text-align: center;
-  }
-
-  .overview-date-picker-container {
-    margin-bottom: 1rem;
-  }
-
-  .el-date-range-picker {
-    margin-left: 200px;
-  }
-  .box-card {
-    margin-top: 1rem;
-  }
-  .box-card .el-card__header {
-    background: rgba(18, 183, 245, 0.2);
-  }
-
-</style>

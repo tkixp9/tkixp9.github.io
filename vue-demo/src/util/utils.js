@@ -1,5 +1,11 @@
 import dateUtil from 'element-ui/src/utils/date';
 
+export const formatNumRate = function (num) {
+  if (num == 0) {
+    return '0';
+  }
+  return formatNum(num * 100) + '%';
+}
 /* 99999 ==> 99.999 */
 export const formatNum = function (num) {
   if (!num) {

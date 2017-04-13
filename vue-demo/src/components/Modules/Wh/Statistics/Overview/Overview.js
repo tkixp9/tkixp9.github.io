@@ -1,6 +1,3 @@
-import {
-  statistics as StatisticsApi
-} from '../../../../../config/request.js';
 import { updateChart } from '../../utils';
 import {
   formatDate,
@@ -21,8 +18,6 @@ module.exports = {
       tableItems: [],
 
       isLoading: false,
-
-      activeNames: ['1'],
 
       pickerOptions: {
         disabledDate(time) {
@@ -57,14 +52,17 @@ module.exports = {
     }
   },
   methods: {
+    resetData : function () {
+      this.tableItems = [];
+    },
     changeDate: function () {
+      this.resetData();
       this.resolveDataRequest();
     },
     resolveDataRequest: function () {
 
       this.isLoading = true;
       var params = {start: formatDate(this.dateSelected[0]),end: formatDate(this.dateSelected[1])};
-      console.log('tkyj++++params++++'+JSON.stringify(params));
       this.$$overview(params, data => {
         this.isLoading = false;
         if (data.sta != 0) {
