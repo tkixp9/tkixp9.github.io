@@ -74,70 +74,38 @@ module.exports = [{
       component: Modules.Wh.Statistics.Active
     }]
   }, {
-    path: 'article',
-    name: '文章管理',
+    path: 'operationmanager',
+    name: '配置管理',
     icon: 'inbox',
     component: Content,
     children: [{
       hidden: true,
       path: '',
       redirect: to => {
-        return 'list'
+        return 'overview'
       }
     }, {
-      path: 'list',
-      name: '文章列表',
+      path: 'apkmanager',
+      name: 'apk管理',
       icon: 'reorder',
-      component: Modules.Wh.Article.List
-    }, {
-      path: 'edit',
-      name: '编辑文章',
-      icon: 'edit',
-      component: Modules.Wh.Article.Edit
+      component: Modules.Wh.Operationmanager.Apkmanager
     }]
   }, {
-    path: 'order',
-    name: '订单管理',
+    path: 'vipmanager',
+    name: '配置管理',
     icon: 'inbox',
     component: Content,
     children: [{
       hidden: true,
       path: '',
       redirect: to => {
-        return 'list'
+        return 'userinfomanager'
       }
     }, {
-      path: 'list',
-      name: '订单列表',
+      path: 'userinfomanager',
+      name: '早报设定',
       icon: 'reorder',
-      component: Modules.Wh.Order.List
-    }, {
-      path: 'edit',
-      name: '编辑订单',
-      icon: 'edit',
-      component: Modules.Wh.Order.Edit
-    }]
-  }, {
-    path: 'orderstatis',
-    name: '订单统计',
-    icon: 'inbox',
-    component: Content,
-    children: [{
-      hidden: true,
-      path: '',
-      redirect: to => {
-        return 'bar'
-      }
-    }, {
-      path: 'bar',
-      name: '柱状图',
-      icon: 'reorder',
-      component: Modules.Wh.OrderStatis.Bar
-    }, {
-      path: 'pie',
-      name: '饼状图',
-      icon: 'edit',
-      component: Modules.Wh.OrderStatis.Pie
+      component: Modules.Wh.Vipmanager.Userinfomanager
     }]
   }]
 }, {

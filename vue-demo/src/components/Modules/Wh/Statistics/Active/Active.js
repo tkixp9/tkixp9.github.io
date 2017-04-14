@@ -16,7 +16,7 @@ module.exports = {
         return [new Date(end.getTime() - 7 * 24 * 3600 * 1000), end];
       })(),
 
-      tableItemsOverview: [],
+      tableItemsActive: [],
       activeThItems: [
         {
           attr: 'date',
@@ -130,17 +130,17 @@ module.exports = {
         }
         var result = data.data;
         updateCharts(result);
-        this.tableItemsOverview = updateOverviewTables(result);
+        this.tableItemsActive = updateActiveTables(result);
 
         //this.activeThItems = ['日期', '新增活跃用户', '+1', '+2', '+3', '+4', '+5', '+6', '+7', '+10', '+15', '+20', '+25', '+30'];
         this.activeTableData = updateTables(result);
       });
 
-      function updateOverviewTables(items) {
-        var tableItemsOverview = [];
+      function updateActiveTables(items) {
+        var tableItemsActive = [];
         for (var i = 0, length = items.dates.length; i < length; i++) {
-          tableItemsOverview[i] = {dates: items.dates[i]};
-          tableItemsOverview[i].user = {
+          tableItemsActive[i] = {dates: items.dates[i]};
+          tableItemsActive[i].user = {
             active_users: formatNum(items.user.active_users[i]) + ' / ' + formatNum(items.user.active_users_chg[i]),
             active_payed_users: formatNum(items.user.active_payed_users[i]) + ' / ' + formatNum(items.user.active_payed_users_chg[i]),
             payed_ratio: formatNumRate(items.user.payed_ratio[i]),
@@ -152,7 +152,7 @@ module.exports = {
             other_client_login: formatNum(items.user.other_client_login[i]) + ' / ' + formatNum(items.user.other_client_login_new[i]),
           };
         }
-        return tableItemsOverview;
+        return tableItemsActive;
       }
 
       function updateTables(items) {
@@ -187,7 +187,7 @@ module.exports = {
 
       function updateCharts(items) {
 
-        updateChart('#active-overview-count', items.dates,
+        updateChart('#active-active-count', items.dates,
           [
             {
               name: '-- active_users：活跃用户',

@@ -1801,6 +1801,505 @@ module.exports = {
       }
     },
   },
+
+  operationmanager: {
+    apklist(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'get', '/wyzs/apk/list', data, succesfn);
+      }
+
+      function getTestJson() {
+        return {
+          data: {
+            items: [
+              {
+                date: "2017-04-14 11:24:24",
+                des: "【本期更新】 微友助手正式上线！ 新增按单功能、多功能、企业级多群购买版本，更贴心的购买方案，全方位满足您群管理需求。",
+                downloadUrl: "http://weiyoubot-10064574.file.myqcloud.com/apk/WechatHelperClient_ofw_151.apk",
+                force: 1,
+                title: "微友助手V2.0.1更新",
+                versionCode: 14,
+                versionName: "2.0.1"
+              },
+              {
+                date: "2017-04-14 11:17:32",
+                des: "【本期更新】 微友助手正式上线！ 新增按单功能、多功能、企业级多群购买版本，更贴心的购买方案，全方位满足您群管理需求。",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_145.apk",
+                force: 1,
+                title: "微友助手V2.0.0更新",
+                versionCode: 13,
+                versionName: "2.0.0"
+              },
+              {
+                date: "2017-03-17 20:02:38",
+                des: "【本期更新】 消息群发——所有消息，直接发至任意群！so 方便~群控好帮手~ 群搜索——添加群机器人的时候，不用再一个个翻找啦，直接搜索定位！",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_121.apk",
+                force: 1,
+                title: "微友助手V1.7.1更新",
+                versionCode: 12,
+                versionName: "1.7.1"
+              },
+              {
+                date: "2017-03-08 11:30:05",
+                des: "【本期更新】 群签到闪亮上线！——群活跃必备，建议群主设置签到小奖励哦，这样群里会更热闹~ 自动回复免费使用——新老用户的未付费群都可一直开启自动回复功能！ 定时提醒换名字啦——改名为“定时发送”，每天定时为各位群主发布消息，不用亲自蹲点发布啦",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_112.apk",
+                force: 1,
+                title: "微友助手V1.7更新",
+                versionCode: 11,
+                versionName: "1.7.0"
+              },
+              {
+                date: "2017-02-09 10:13:59",
+                des: "【本期更新】 1.群话题功能免费使用——方便你导出并编辑群内聊天的内容，变成一篇文章，可分享到任何地方~让你的群聊内容更有价值！ 2.群投诉功能修复——方便群成员揪出群内的捣蛋分子，一起创建有爱的群~ 3.群管理权限功能修复——群主可以设置多个管理员帮自己管理群，也可以随时收回管理权限~",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_98.apk",
+                force: 1,
+                title: "微友助手V1.6更新",
+                versionCode: 10,
+                versionName: "1.6.0"
+              },
+              {
+                date: "2017-01-25 16:18:49",
+                des: "【新年】 让我们一起期待2017，一起给身边的朋友和群友送上祝福：祝你鸡年大吉~ 【本期更新】 话题功能上线——方便你导出并编辑群内聊天的内容，变成一篇文章，可分享到任何地方~让你的群聊内容更有价值！ 新春注册红包大礼——注册有红包相送哦，这时候购买真的是太太太划算啦！",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_92.apk",
+                force: 0,
+                title: "微友助手V1.5更新",
+                versionCode: 9,
+                versionName: "1.5.0"
+              },
+              {
+                date: "2017-01-22 10:31:51",
+                des: "1.添加了默认素材库 2.红包提醒功能优化 3.自动回复优化 4.定时提醒优化",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/weiyoubot1.4.1.apk",
+                force: 0,
+                title: "微友助手V1.4.1更新说明",
+                versionCode: 8,
+                versionName: "1.4.1"
+              },
+              {
+                date: "2016-01-30 17:34:36",
+                des: "1. 新注册用户支持免费试用7天 2. 微信登录切换为手机注册登录 3. 支持支付宝支付 4. 修复部分用户设置管理员失败的问题 5. 修复一些已知问题",
+                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/weiyoubot1.3.0.apk",
+                force: 0,
+                title: "微友助手更新说明",
+                versionCode: 6,
+                versionName: "V1.3.0"
+              }
+            ],
+            total: 8
+          },
+          msg: "ok",
+          sta: 0
+        };
+      }
+
+    },
+    apkdelete(data, succesfn) {
+      if (window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/apk/delete', data, succesfn);
+      }
+
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+    apkupload(data, succesfn) {
+      if (window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/apk/upload', data, succesfn);
+      }
+
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+  },
+  userinfomanager: {
+    userData(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'get', '/wyzs/pay/userdata', data, succesfn);
+      }
+
+      function getTestJson() {
+        return {
+          data: {
+            dates: [
+              "04-05",
+              "04-06",
+              "04-07",
+              "04-08",
+              "04-09",
+              "04-10",
+              "04-11"
+            ],
+            group: {
+              active_groups: [
+                14986,
+                15163,
+                15455,
+                15269,
+                15195,
+                15882,
+                16223
+              ],
+              active_groups_chg: [
+                1852,
+                177,
+                292,
+                -186,
+                -74,
+                687,
+                341
+              ],
+              data_groups: [
+                87324,
+                87822,
+                88290,
+                88888,
+                89417,
+                89721,
+                90362
+              ],
+              data_groups_chg: [
+                581,
+                498,
+                468,
+                598,
+                529,
+                304,
+                641
+              ],
+              data_online_groups: [
+                11708,
+                11899,
+                11842,
+                11802,
+                11576,
+                11684,
+                12084
+              ],
+              data_online_groups_chg: [
+                547,
+                191,
+                -57,
+                -40,
+                -226,
+                108,
+                400
+              ],
+              setting_groups: [
+                85755,
+                86259,
+                86733,
+                87335,
+                87854,
+                88167,
+                88963
+              ],
+              setting_groups_chg: [
+                594,
+                504,
+                474,
+                602,
+                519,
+                313,
+                796
+              ],
+              setting_online_groups: [
+                10139,
+                10336,
+                10285,
+                10249,
+                10013,
+                10130,
+                10685
+              ],
+              setting_online_groups_chg: [
+                560,
+                197,
+                -51,
+                -36,
+                -236,
+                117,
+                555
+              ],
+              total_groups: [
+                482228,
+                488070,
+                491024,
+                495240,
+                498175,
+                501393,
+                505245
+              ],
+              total_groups_chg: [
+                4149,
+                5842,
+                2954,
+                4216,
+                2935,
+                3218,
+                3852
+              ]
+            },
+            members: {
+              data_members: [
+                12131098,
+                12170157,
+                12209797,
+                12297744,
+                12362917,
+                12414776,
+                12477685
+              ],
+              data_members_chg: [
+                28455,
+                39059,
+                39640,
+                87947,
+                65173,
+                51859,
+                62909
+              ],
+              data_online_members: [
+                1418244,
+                1438280,
+                1448752,
+                1468603,
+                1441296,
+                1457798,
+                1488182
+              ],
+              data_online_members_chg: [
+                49054,
+                20036,
+                10472,
+                19851,
+                -27307,
+                16502,
+                30384
+              ],
+              setting_members: [
+                12036739,
+                12076146,
+                12115680,
+                12203722,
+                12269103,
+                12321211,
+                12394653
+              ],
+              setting_members_chg: [
+                28048,
+                39407,
+                39534,
+                88042,
+                65381,
+                52108,
+                73442
+              ],
+              setting_online_members: [
+                1323885,
+                1344269,
+                1354635,
+                1374581,
+                1347482,
+                1364233,
+                1405150
+              ],
+              setting_online_members_chg: [
+                48647,
+                20384,
+                10366,
+                19946,
+                -27099,
+                16751,
+                40917
+              ],
+              total_members: [
+                71795999,
+                72417561,
+                72862717,
+                73313525,
+                73653524,
+                73982987,
+                74464629
+              ],
+              total_members_chg: [
+                459914,
+                621562,
+                445156,
+                450808,
+                339999,
+                329463,
+                481642
+              ]
+            },
+            user: {
+              manage_groups_users: [
+                29950,
+                30155,
+                30329,
+                30497,
+                30631,
+                30794,
+                30959
+              ],
+              manage_groups_users_chg: [
+                140,
+                205,
+                174,
+                168,
+                134,
+                163,
+                165
+              ],
+              manage_groups_users_online: [
+                3179,
+                3226,
+                3283,
+                3296,
+                3280,
+                3331,
+                3370
+              ],
+              manage_groups_users_online_chg: [
+                85,
+                47,
+                57,
+                13,
+                -16,
+                51,
+                39
+              ],
+              payed_orders: [
+                5470,
+                5572,
+                5659,
+                5727,
+                5800,
+                5889,
+                5992
+              ],
+              payed_orders_chg: [
+                72,
+                102,
+                87,
+                68,
+                73,
+                89,
+                103
+              ],
+              payed_users: [
+                3621,
+                3688,
+                3747,
+                3791,
+                3837,
+                3893,
+                3959
+              ],
+              payed_users_chg: [
+                49,
+                67,
+                59,
+                44,
+                46,
+                56,
+                66
+              ],
+              regist_users: [
+                119799,
+                120317,
+                120755,
+                121172,
+                121545,
+                121993,
+                122482
+              ],
+              regist_users_chg: [
+                426,
+                518,
+                438,
+                417,
+                373,
+                448,
+                489
+              ],
+              subscribe_owners: [
+                31741,
+                31976,
+                32184,
+                32372,
+                32529,
+                32724,
+                32915
+              ],
+              subscribe_owners_chg: [
+                178,
+                235,
+                208,
+                188,
+                157,
+                195,
+                191
+              ],
+              subscribe_users: [
+                37729,
+                37964,
+                38172,
+                38362,
+                38519,
+                38713,
+                38919
+              ],
+              subscribe_users_chg: [
+                179,
+                235,
+                208,
+                190,
+                157,
+                194,
+                206
+              ],
+              total_revenue: [
+                254864.15,
+                259194.15,
+                262560.15,
+                265513.15,
+                268287.15,
+                281636.15,
+                291919.15
+              ],
+              total_revenue_chg: [
+                3003,
+                4330,
+                3366.000000000029,
+                2953,
+                2774,
+                13349,
+                10283
+              ]
+            }
+          },
+          msg: "ok",
+          sta: 0
+        }
+      }
+
+    },
+  },
 	//用户模块
 	user: {
 		/**

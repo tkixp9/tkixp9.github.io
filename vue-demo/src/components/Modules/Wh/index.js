@@ -1,6 +1,6 @@
 module.exports = {
-    Article: require('./Article/'),
-    Statistics: require('./Statistics/'),
-    Order: require('./Order/'),
-    OrderStatis: require('./OrderStatis/')
+  Operationmanager: require('./Operationmanager/'),
+  Article: require('./Article/'),
+  Statistics: require('./Statistics/'),
+  Vipmanager: require('./Vipmanager/'),
 };

@@ -2,7 +2,8 @@
     <header class="head-nav">
        <el-row>
             <el-col :span="4" class='logo-container'>
-                <img src="../../../assets/logo-sm.png" class='logo' alt="">
+                <img src="../../../assets/top_bar_logo.png" class='logo' alt="">
+                <span class="logo-name">后台管理系统</span>
             </el-col>
             <el-col :span="16">
                 <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo" mode="horizontal" unique-opened router>
@@ -19,11 +20,11 @@
                     </el-submenu> -->
                     <!-- <el-menu-item index="2">商城中心</el-menu-item>
                     <el-menu-item index="3">系统设置</el-menu-item> -->
-                    
+
                     <!-- v-if='!item.hidden && $store.state.user.userinfo.access.indexOf(item.path)===-1' -->
-                    <el-menu-item 
-                        :index="item.path" 
-                        v-for='(item,index) in $router.options.routes' 
+                    <el-menu-item
+                        :index="item.path"
+                        v-for='(item,index) in $router.options.routes'
                         v-if='!item.hidden'>
                         {{item.name}}<!-- {{item.path}} -->
                     </el-menu-item>
@@ -32,7 +33,7 @@
             <el-col :span="4" class="userinfo">
                 <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
                 <span class='username'>
-                    <el-dropdown 
+                    <el-dropdown
                         trigger="click"
                         @command='setDialogInfo'>
                         <span class="el-dropdown-link">
@@ -40,11 +41,11 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command='info'>修改信息</el-dropdown-item>
-                            <el-dropdown-item 
+                            <el-dropdown-item
                                 command='pass'
                                 v-if='$store.state.user.userinfo.is_update_pass'>修改密码</el-dropdown-item>
-                            <el-dropdown-item 
-                                command='set' 
+                            <el-dropdown-item
+                                command='set'
                                 v-if='$store.state.user.userinfo.pid==0'>系统设置</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -53,45 +54,45 @@
             </el-col>
         </el-row>
 
-        <el-dialog size="tiny" :title="dialog.title" 
+        <el-dialog size="tiny" :title="dialog.title"
             v-model="dialog.show_pass">
-            <el-form style="margin:20px;width:80%;" 
-                label-width="100px" 
+            <el-form style="margin:20px;width:80%;"
+                label-width="100px"
                 :model="dialog.user_info"
                 :rules="dialog.user_info_rules"
                 ref='user_info'>
-                <el-form-item class='edit-form' 
-                    label="邮箱" 
+                <el-form-item class='edit-form'
+                    label="邮箱"
                     prop='email'>
                     <el-input v-model="dialog.user_info.email" disabled placeholder='常用邮箱'></el-input>
                 </el-form-item>
-                <el-form-item class='edit-form' 
-                    label="用户名称" 
+                <el-form-item class='edit-form'
+                    label="用户名称"
                     prop='username'>
                     <el-input v-model="dialog.user_info.username" disabled placeholder='用户名'></el-input>
                 </el-form-item>
-                <el-form-item class='edit-form' 
-                    label="当前密码" 
+                <el-form-item class='edit-form'
+                    label="当前密码"
                     prop='old_password'>
-                    <el-input 
+                    <el-input
                         type='password'
                         placeholder='当前密码'
                         auto-complete='off'
                         v-model="dialog.user_info.old_password"></el-input>
                 </el-form-item>
-                <el-form-item class='edit-form' 
-                    label="新密码" 
+                <el-form-item class='edit-form'
+                    label="新密码"
                     prop='password'>
-                    <el-input 
+                    <el-input
                         type='password'
                         placeholder='新密码'
                         auto-complete='off'
                         v-model="dialog.user_info.password"></el-input>
                 </el-form-item>
-                <el-form-item class='edit-form' 
-                    label="确认密码" 
+                <el-form-item class='edit-form'
+                    label="确认密码"
                     prop='password_confirm'>
-                    <el-input 
+                    <el-input
                         type='password'
                         placeholder='确认密码'
                         auto-complete='off'
@@ -105,10 +106,10 @@
         </el-dialog>
 
 
-        <el-dialog size="small" :title="dialog.title" 
+        <el-dialog size="small" :title="dialog.title"
             v-model="dialog.show_set">
-            <el-form style="margin:20px;width:80%;" 
-                label-width="100px" 
+            <el-form style="margin:20px;width:80%;"
+                label-width="100px"
                 v-model='dialog.set_info'
                 ref='set_info'>
                 <el-form-item label="登录方式">
@@ -124,9 +125,9 @@
                         v-model='dialog.set_info.disabled_update_pass'>
                         <!-- value的值的ID是number，disabled_update_pass的元素中的是字符串，
                             所以在value上，需要拼装一个空串，来转化
-                            因为elementUI内部用了=== 
+                            因为elementUI内部用了===
                         -->
-                        <el-option                            
+                        <el-option
                             v-for='user in dialog.set_info.select_users'
                             :label='user.username'
                             :value='user.id+""'></el-option>
@@ -155,6 +156,13 @@
         width: auto;
         margin-left: 10px;
         margin-top: 5px;
+      float: left;
+    }
+    .logo-name {
+      display: inline-block;
+      margin: 1.2rem 0.5rem;
+      position: absolute;
+      max-width: 100px;
     }
     .fa-user{
         position: relative;

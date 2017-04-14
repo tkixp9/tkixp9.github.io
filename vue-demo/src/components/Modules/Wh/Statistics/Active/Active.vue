@@ -16,10 +16,10 @@
       <div slot="header" class="clearfix">
         <span style="">>> 数据总览</span>
       </div>
-      <div id="active-overview-count">
+      <div id="active-active-count">
       </div>
 
-      <el-table :data="tableItemsOverview" border style="width: 100%;">
+      <el-table :data="tableItemsActive" border style="width: 100%;">
         <el-table-column prop="dates" label="日期" width="80"></el-table-column>
         <el-table-column prop="user.active_users" label="活跃用户"></el-table-column>
         <el-table-column prop="user.active_payed_users" label="已付费活跃用户"></el-table-column>
@@ -80,7 +80,6 @@
     background: rgba(18, 183, 245, 0.2);
   }
   .el-table .cell, .el-table th>div {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 8px;
   }
 </style>

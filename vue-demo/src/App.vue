@@ -11,16 +11,16 @@
         name: 'app',
         components: {},
         methods:{
-            
+
         },
         mounted(){
-            
+
         },
         watch:{
             $route(to,from){
                 // console.log(to);
                 if (!to.matched.length) {
-                    this.$router.push('/404');
+                    this.$router.push('/');
                 }
             }
         }
@@ -31,12 +31,12 @@
         animation: bounce-in .5s;
         -webkit-animation:bounce-in .5s;
     }
-    
+
     .bounce-leave-active {
         animation: bounce-out .2s;
         -webkit-animation: bounce-out .2s;
     }
-    
+
     @keyframes bounce-in {
         0% {
             transform: scale(0);
@@ -48,7 +48,7 @@
             transform: scale(1);
         }
     }
-    
+
     @keyframes bounce-out {
         0% {
             transform: scale(1);
