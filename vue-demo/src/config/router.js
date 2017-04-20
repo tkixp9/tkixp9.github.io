@@ -34,12 +34,12 @@ module.exports = [{
     hidden: true,
     path: '',
     redirect: to => {
-      return 'statistics'
+      return 'operationmanager'
     }
-  }, {
+  }, /*{
     path: 'statistics',
     name: '统计数据',
-    icon: 'inbox',
+    icon: 'database',
     component: Content,
     children: [{
       hidden: true,
@@ -50,17 +50,17 @@ module.exports = [{
     }, {
       path: 'overview',
       name: '数据总览',
-      icon: 'reorder',
+      icon: 'cubes',
       component: Modules.Wh.Statistics.Overview
     }, {
       path: 'officialrobot',
       name: '官方机器人统计',
-      icon: 'reorder',
+      icon: 'university',
       component: Modules.Wh.Statistics.Officialrobot
     }, {
       path: 'personalrobot',
       name: '专属机器人统计',
-      icon: 'reorder',
+      icon: 'lock',
       component: Modules.Wh.Statistics.Personalrobot
     }, {
       path: 'features',
@@ -70,27 +70,32 @@ module.exports = [{
     }, {
       path: 'active',
       name: '活跃留存统计',
-      icon: 'reorder',
+      icon: 'line-chart',
       component: Modules.Wh.Statistics.Active
     }]
-  }, {
+  },*/ {
     path: 'operationmanager',
     name: '配置管理',
-    icon: 'inbox',
+    icon: 'gear',
     component: Content,
     children: [{
       hidden: true,
       path: '',
       redirect: to => {
-        return 'overview'
+        return 'noticemanager'
       }
     }, {
+      path: 'noticemanager',
+      name: '公告管理',
+      icon: 'bell-o',
+      component: Modules.Wh.Operationmanager.Noticemanager
+    }, {
       path: 'apkmanager',
-      name: 'apk管理',
-      icon: 'reorder',
+      name: 'Apk管理',
+      icon: 'android',
       component: Modules.Wh.Operationmanager.Apkmanager
     }]
-  }, {
+  },/* {
     path: 'vipmanager',
     name: '配置管理',
     icon: 'inbox',
@@ -107,8 +112,8 @@ module.exports = [{
       icon: 'reorder',
       component: Modules.Wh.Vipmanager.Userinfomanager
     }]
-  }]
-}, {
+  }*/]
+},/* {
   path: '/function',
   name: '功能模块',
   icon: 'inbox',
@@ -235,4 +240,4 @@ module.exports = [{
       component: Modules.Adv.Wangeditor.Many
     }]
   }]
-}];
+}*/];

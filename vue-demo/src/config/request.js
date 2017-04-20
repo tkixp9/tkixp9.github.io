@@ -1803,105 +1803,134 @@ module.exports = {
   },
 
   operationmanager: {
+    noticecreate(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/bulletin/create', data, succesfn);
+      }
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+    noticelist(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'get', '/wyzs/bulletin/list', data, succesfn);
+      }
+      function getTestJson() {
+        return {
+          data: [
+            {
+              content: "xxx content" + data.type,
+              id: "58f818807e084804500dd8cd",
+              title: "xxx title",
+              web: 1
+            },
+            {
+              content: "dsfsf content" + data.type,
+              id: "58f818807e084804500dd8cd",
+              title: "sdfsdf title",
+              app: 1
+            },
+            {
+              content: "dsfsf content" + data.type,
+              id: "58f818807e084804500dd8cd",
+              title: "sdfsdf title",
+              app: 1,
+              web: 1
+            }
+          ],
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+    noticestick(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/bulletin/top', data, succesfn);
+      }
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+    noticeoff(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/bulletin/off', data, succesfn);
+      }
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
+    noticeremove(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
+        succesfn(getTestJson());
+      } else {
+        ajax.call(this, 'post', '/wyzs/bulletin/remove', data, succesfn);
+      }
+      function getTestJson() {
+        return {
+          msg: "ok",
+          sta: 0
+        };
+      }
+    },
     apklist(data, succesfn) {
       if(window.location.host.indexOf('localhost') >= 0) {
         succesfn(getTestJson());
       } else {
         ajax.call(this, 'get', '/wyzs/apk/list', data, succesfn);
       }
-
       function getTestJson() {
         return {
           data: {
             items: [
               {
-                date: "2017-04-14 11:24:24",
-                des: "【本期更新】 微友助手正式上线！ 新增按单功能、多功能、企业级多群购买版本，更贴心的购买方案，全方位满足您群管理需求。",
-                downloadUrl: "http://weiyoubot-10064574.file.myqcloud.com/apk/WechatHelperClient_ofw_151.apk",
-                force: 1,
-                title: "微友助手V2.0.1更新",
-                versionCode: 14,
-                versionName: "2.0.1"
-              },
-              {
-                date: "2017-04-14 11:17:32",
-                des: "【本期更新】 微友助手正式上线！ 新增按单功能、多功能、企业级多群购买版本，更贴心的购买方案，全方位满足您群管理需求。",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_145.apk",
-                force: 1,
-                title: "微友助手V2.0.0更新",
+                date: "2017-04-25 15:05:42",
+                des: "sdf",
+                downloadUrl: "http://weiyoubot-10064574.file.myqcloud.com/apk/WechatHelperClient_ofw_145.apk",
+                force: 0,
+                title: "dsf",
                 versionCode: 13,
                 versionName: "2.0.0"
               },
               {
-                date: "2017-03-17 20:02:38",
-                des: "【本期更新】 消息群发——所有消息，直接发至任意群！so 方便~群控好帮手~ 群搜索——添加群机器人的时候，不用再一个个翻找啦，直接搜索定位！",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_121.apk",
-                force: 1,
-                title: "微友助手V1.7.1更新",
+                date: "2017-04-25 15:05:08",
+                des: "sdf",
+                downloadUrl: "http://weiyoubot-10064574.file.myqcloud.com/apk/WechatHelperClient_ofw_121_1.apk",
+                force: 0,
+                title: "dsf",
                 versionCode: 12,
                 versionName: "1.7.1"
-              },
-              {
-                date: "2017-03-08 11:30:05",
-                des: "【本期更新】 群签到闪亮上线！——群活跃必备，建议群主设置签到小奖励哦，这样群里会更热闹~ 自动回复免费使用——新老用户的未付费群都可一直开启自动回复功能！ 定时提醒换名字啦——改名为“定时发送”，每天定时为各位群主发布消息，不用亲自蹲点发布啦",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_112.apk",
-                force: 1,
-                title: "微友助手V1.7更新",
-                versionCode: 11,
-                versionName: "1.7.0"
-              },
-              {
-                date: "2017-02-09 10:13:59",
-                des: "【本期更新】 1.群话题功能免费使用——方便你导出并编辑群内聊天的内容，变成一篇文章，可分享到任何地方~让你的群聊内容更有价值！ 2.群投诉功能修复——方便群成员揪出群内的捣蛋分子，一起创建有爱的群~ 3.群管理权限功能修复——群主可以设置多个管理员帮自己管理群，也可以随时收回管理权限~",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_98.apk",
-                force: 1,
-                title: "微友助手V1.6更新",
-                versionCode: 10,
-                versionName: "1.6.0"
-              },
-              {
-                date: "2017-01-25 16:18:49",
-                des: "【新年】 让我们一起期待2017，一起给身边的朋友和群友送上祝福：祝你鸡年大吉~ 【本期更新】 话题功能上线——方便你导出并编辑群内聊天的内容，变成一篇文章，可分享到任何地方~让你的群聊内容更有价值！ 新春注册红包大礼——注册有红包相送哦，这时候购买真的是太太太划算啦！",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/WechatHelperClient_ofw_92.apk",
-                force: 0,
-                title: "微友助手V1.5更新",
-                versionCode: 9,
-                versionName: "1.5.0"
-              },
-              {
-                date: "2017-01-22 10:31:51",
-                des: "1.添加了默认素材库 2.红包提醒功能优化 3.自动回复优化 4.定时提醒优化",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/weiyoubot1.4.1.apk",
-                force: 0,
-                title: "微友助手V1.4.1更新说明",
-                versionCode: 8,
-                versionName: "1.4.1"
-              },
-              {
-                date: "2016-01-30 17:34:36",
-                des: "1. 新注册用户支持免费试用7天 2. 微信登录切换为手机注册登录 3. 支持支付宝支付 4. 修复部分用户设置管理员失败的问题 5. 修复一些已知问题",
-                downloadUrl: "http://weiyoubot-10064574.cos.myqcloud.com/apk/weiyoubot1.3.0.apk",
-                force: 0,
-                title: "微友助手更新说明",
-                versionCode: 6,
-                versionName: "V1.3.0"
               }
             ],
-            total: 8
+            total: 5
           },
           msg: "ok",
           sta: 0
         };
       }
-
     },
-    apkdelete(data, succesfn) {
-      if (window.location.host.indexOf('localhost') >= 0) {
+    apkupload(data, succesfn, failurefn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
         succesfn(getTestJson());
       } else {
-        ajax.call(this, 'post', '/wyzs/apk/delete', data, succesfn);
+        ajax.call(this, 'post', '/wyzs/apk/upload', data, succesfn, undefined, failurefn);
       }
-
       function getTestJson() {
         return {
           msg: "ok",
@@ -1909,13 +1938,12 @@ module.exports = {
         };
       }
     },
-    apkupload(data, succesfn) {
-      if (window.location.host.indexOf('localhost') >= 0) {
+    apkdelete(data, succesfn) {
+      if(window.location.host.indexOf('localhost') >= 0) {
         succesfn(getTestJson());
       } else {
-        ajax.call(this, 'post', '/wyzs/apk/upload', data, succesfn);
+        ajax.call(this, 'post', '/wyzs/apk/delete', data, succesfn);
       }
-
       function getTestJson() {
         return {
           msg: "ok",

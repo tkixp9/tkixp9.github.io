@@ -1,12 +1,11 @@
 <template>
     <header class="head-nav">
        <el-row>
-            <el-col :span="4" class='logo-container'>
+            <el-col style="min-width: 190px" :span="4" class='logo-container'>
                 <img src="../../../assets/top_bar_logo.png" class='logo' alt="">
                 <span class="logo-name">后台管理系统</span>
             </el-col>
-            <el-col :span="16">
-                <el-menu theme="dark" :default-active="$store.state.router.headerCurRouter" class="el-menu-demo" mode="horizontal" unique-opened router>
+                <el-menu style="float: left; background: #324057" :default-active="$store.state.router.headerCurRouter" class="top_menu_container el-menu-demo" mode="horizontal" unique-opened router>
                     <!-- <el-submenu index="1">
                         <template slot="title">向导中心</template>
                         <el-menu-item index="1-1">快捷方式1</el-menu-item>
@@ -22,36 +21,36 @@
                     <el-menu-item index="3">系统设置</el-menu-item> -->
 
                     <!-- v-if='!item.hidden && $store.state.user.userinfo.access.indexOf(item.path)===-1' -->
-                    <el-menu-item
+                    <el-menu-item style="background: #324057"
                         :index="item.path"
                         v-for='(item,index) in $router.options.routes'
                         v-if='!item.hidden'>
                         {{item.name}}<!-- {{item.path}} -->
                     </el-menu-item>
                 </el-menu>
-            </el-col>
-            <el-col :span="4" class="userinfo">
-                <!-- <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> -->
-                <span class='username'>
-                    <el-dropdown
-                        trigger="click"
-                        @command='setDialogInfo'>
-                        <span class="el-dropdown-link">
-                            {{this.$store.state.user.userinfo.username}}<i class="el-icon-caret-bottom el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command='info'>修改信息</el-dropdown-item>
-                            <el-dropdown-item
-                                command='pass'
-                                v-if='$store.state.user.userinfo.is_update_pass'>修改密码</el-dropdown-item>
-                            <el-dropdown-item
-                                command='set'
-                                v-if='$store.state.user.userinfo.pid==0'>系统设置</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </span>
-                <i class="fa fa-sign-out logout" @click='logout'></i>
-            </el-col>
+            <i class="fa fa-sign-out logout" @click='logout'></i>
+
+         <!--<el-col :span="4" class="userinfo">
+             &lt;!&ndash; <span class='username'><i class='fa fa-user'></i>{{this.$store.state.user.userinfo.username}}</span> &ndash;&gt;
+             <span style="display: none" class='username'>
+                 <el-dropdown
+                     trigger="click"
+                     @command='setDialogInfo'>
+                     <span class="el-dropdown-link">
+                         {{this.$store.state.user.userinfo.username}}<i class="el-icon-caret-bottom el-icon&#45;&#45;right"></i>
+                     </span>
+                     <el-dropdown-menu slot="dropdown">
+                         <el-dropdown-item command='info'>修改信息</el-dropdown-item>
+                         <el-dropdown-item
+                             command='pass'
+                             v-if='$store.state.user.userinfo.is_update_pass'>修改密码</el-dropdown-item>
+                         <el-dropdown-item
+                             command='set'
+                             v-if='$store.state.user.userinfo.pid==0'>系统设置</el-dropdown-item>
+                     </el-dropdown-menu>
+                 </el-dropdown>
+             </span>
+         </el-col>-->
         </el-row>
 
         <el-dialog size="tiny" :title="dialog.title"
@@ -135,8 +134,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialog.show_set = false">取 消</el-button>
-                <el-button type="primary" @click="onUpdateSetting">确 定</el-button>
+                <el-button @click="dialog.show_set = false">取消</el-button>
+                <el-button type="primary" @click="onUpdateSetting">确定</el-button>
             </span>
         </el-dialog>
     </header>
@@ -185,8 +184,10 @@
             height: 60px;
             line-height: 60px;
             text-align: center;
-            float: right;
             cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
         }
     }
     .userinfo{
@@ -200,5 +201,9 @@
         .el-dropdown{
             color:#FFF;
         }
+    }
+    .top_menu_container {
+      background: #324057;
+      height: 59px;
     }
 </style>

@@ -1,8 +1,9 @@
 import Vue from 'vue';
 
 // element-ui
+import './assets/theme/index.css';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-default/index.css';
+// import 'element-ui/lib/theme-default/index.css';
 Vue.use(ElementUI);
 
 // router
@@ -49,7 +50,7 @@ router.beforeEach((to, from, next) => {
   }else {
         if (validateToken && to.path === '/login') {
             next({
-                path: '/wh/statistics/overview'
+                path: '/wh/'
             });
         } else {
             NProgress.start();

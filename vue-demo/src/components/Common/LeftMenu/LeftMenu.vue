@@ -2,52 +2,52 @@
     <div class="left" :style="{'height':win_size.height,'width':$store.state.leftmenu.width}" id='admin-left'>
         <div id='left-menu'>
             <el-row class='tac'
-                v-for="(route,index) in $router.options.routes" 
+                v-for="(route,index) in $router.options.routes"
                 v-if='!route.hidden && $route.matched.length && $route.matched[0].path===route.path'>
                 <el-col :span="24">
-                    <el-menu 
-                        class="el-menu-vertical-demo" 
+                    <el-menu
+                        class="el-menu-vertical-demo"
                         theme="dark"
                         :default-active="$route.path"
-                        unique-opened 
+                        unique-opened
                         router>
                         <!-- v-if="!item.hidden && $store.state.user.userinfo.access.indexOf(route.path+'/'+item.path)===-1" -->
-                        <template 
-                            v-for="(item,index) in route.children" 
+                        <template
+                            v-for="(item,index) in route.children"
                             v-if="!item.hidden">
-                            <el-submenu 
+                            <el-submenu
                                 :index="item.path">
-                                <template 
+                                <template
                                     slot="title">
-                                    <el-tooltip 
-                                        class="item" 
+                                    <el-tooltip
+                                        class="item"
                                         effect="dark"
                                         placement="right"
-                                        :disabled="$store.state.leftmenu.menu_flag" 
+                                        :disabled="$store.state.leftmenu.menu_flag"
                                         :content="item.name">
-                                       <i :class="'fa fa-'+item.icon"></i>
+                                       <i :class="'fa fa-'+item.icon + ' fa-lg'"></i>
                                     </el-tooltip>
-                                    <span 
-                                        class='menu-name' 
+                                    <span
+                                        class='menu-name'
                                         v-if="$store.state.leftmenu.menu_flag">{{item.name}}<!-- {{route.path+'/'+item.path}} --></span>
                                 </template>
 
                                 <!-- v-if="!child.hidden && $store.state.user.userinfo.access.indexOf(route.path+'/'+item.path+'/'+child.path)===-1" -->
-                                <el-menu-item 
-                                    v-for='(child,cindex) in item.children' 
+                                <el-menu-item
+                                    v-for='(child,cindex) in item.children'
                                     v-if="!child.hidden"
-                                    :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}" 
+                                    :style="{'padding-left':$store.state.leftmenu.menu_flag? '40px' : '23px'}"
                                     :index='$store.state.router.headerCurRouter+"/"+item.path+"/"+child.path'>
-                                    <el-tooltip 
-                                        class="item" 
-                                        effect="dark" 
+                                    <el-tooltip
+                                        class="item"
+                                        effect="dark"
                                         placement="right"
-                                        :disabled="$store.state.leftmenu.menu_flag" 
+                                        :disabled="$store.state.leftmenu.menu_flag"
                                         :content="child.name">
                                         <i :class="'fa fa-'+child.icon"></i>
                                     </el-tooltip>
-                                    <span 
-                                        class='menu-name' 
+                                    <span
+                                        class='menu-name'
                                         v-if="$store.state.leftmenu.menu_flag">{{child.name}}<!-- {{route.path+'/'+item.path+'/'+child.path}} --></span>
                                 </el-menu-item>
                             </el-submenu>
@@ -56,7 +56,8 @@
                 </el-col>
             </el-row>
             <div class="toggle-menu" @click='toggleMenu'>
-                <i class='el-icon-arrow-left'></i>
+              <i v-if="memu_state" class='el-icon-arrow-left'></i>
+              <i v-else class='el-icon-arrow-right'></i>
             </div>
         </div>
     </div>
@@ -71,7 +72,8 @@
 
                 win_size:{
                     height:'',
-                }
+                },
+                memu_state: true,
             }
         },
         methods:{
@@ -80,6 +82,7 @@
             },
 
             toggleMenu(){
+                this.memu_state = !this.memu_state;
                 this.$store.dispatch(this.$store.state.leftmenu.menu_flag?'set_menu_close':'set_menu_open');
             },
 
@@ -147,7 +150,7 @@
         background: #324057;
         position: relative;
         overflow-x: hidden;
-        
+
 
         .toggle-menu{
             width: 100%;

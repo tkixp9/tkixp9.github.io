@@ -11,7 +11,7 @@ import {
 } from 'config/settings.js';
 
 // 动态设置本地和线上接口域名
-Vue.axios.defaults.baseURL = 'http://admin.weiyoubot.com/console/api'//gbs.host;
+Vue.axios.defaults.baseURL = '/console/api'//gbs.host;
 
 /**
  * 封装axios的通用请求

@@ -1,6 +1,7 @@
 import {
     user as UserApi
 } from '../../config/request.js';
+
 import Md5 from '../../libs/MD5';
 
 module.exports = {
@@ -58,7 +59,8 @@ module.exports = {
             this.$refs[ref].validate((valid) => {
                 if (valid) {
                     this.login_actions.disabled = true;
-                  var localUser = {username:"1", password:"c4ca4238a0b923820dcc509a6f75849b"};/*robot@wechatGroup 5fb76c577d4e7573030e62b9cf117bf3*/
+                  var localUser = {username:"robot@wechatGroup", password:"5fb76c577d4e7573030e62b9cf117bf3"};
+                  //{username:"1", password:"c4ca4238a0b923820dcc509a6f75849b"};
                   var current = this[ref];
                   var mdPassword = Md5.hex_md5(current.password);
                   var data = {
@@ -84,6 +86,7 @@ module.exports = {
 
                   } else {
                     this.$store.state.user.userinfo.token = undefined;
+                    this.$alert('请输入正确的用户名和密码！', {confirmButtonText: '确定'});
                   }
                   this.login_actions.disabled = false;
                 }

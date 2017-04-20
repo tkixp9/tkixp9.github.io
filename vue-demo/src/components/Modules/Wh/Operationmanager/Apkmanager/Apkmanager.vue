@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-card class="box-card">
+    <el-card class="box-card" v-loading="isUploadingFiles" element-loading-text="正在上传...">
       <div slot="header" class="clearfix">
         <span style="">>> Apk更新</span>
       </div>
@@ -36,8 +36,10 @@
           <div>
             <el-button size="large">选择文件</el-button>
             <span style="margin-left: 15px">{{fileDatas ? fileDatas.name : ''}}</span>
-            <form style="opacity: 0;position: absolute;top: 0;font-size: 1.8rem;" action="/" method="POST" enctype="multipart/form-data">
-              <input v-if="!resetInputFileElement" type="file" name="file" ref="fileInputer" id="file" @change="handlerFileChange"/>
+            <form style="opacity: 0;position: absolute;top: 0;font-size: 1.8rem;" action="/" method="POST"
+                  enctype="multipart/form-data">
+              <input style="position: absolute;height: 40px;cursor: pointer;width: 108px;" v-if="!resetInputFileElement" type="file" name="file" ref="fileInputer" id="file"
+                     @change="handlerFileChange"/>
             </form>
           </div>
 
@@ -45,9 +47,12 @@
       </el-row>
 
       <el-row>
-          <el-button :disabled="!updateTitle || !updateDes || !fileDatas" @click="submitNewApk" size="large" type="primary">确认提交</el-button>
+        <el-button :disabled="!updateTitle || !updateDes || !fileDatas" @click="submitNewApk" size="large"
+                   type="primary">确认提交
+        </el-button>
 
       </el-row>
+
     </el-card>
 
     <el-card class="box-card">
@@ -73,21 +78,13 @@
         </el-table-column>
       </el-table>
 
-      <el-pagination if-show="tablePageSize < tableToatalSize" style="margin-top: 16px; text-align: right" @size-change="handlePageSizeChange"
+      <el-pagination v-show="tablePageSize < tableToatalSize" style="margin-top: 16px; text-align: right"
+                     @size-change="handlePageSizeChange"
                      @current-change="handleCurrentPageChange" :current-page="currentPageIndex"
                      :page-sizes="[20, 50, 100, 9999]" :page-size="tablePageSize"
                      layout="total, sizes, prev, pager, next, jumper" :total="tableToatalSize">
       </el-pagination>
     </el-card>
-
-    <el-dialog title="删除确认" v-model="dialogVisible" size="tiny">
-      <span>确定要删除这个APK吗？</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="cancelDelete">取消</el-button>
-          <el-button type="primary" @click="confirmDelete">确定</el-button>
-        </span>
-    </el-dialog>
-
   </div>
 
 </template>

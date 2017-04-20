@@ -23,7 +23,7 @@
                                 v-model='data.password'
                                 @keyup.native.enter="login('data')"></el-input>
                         </el-form-item>
-                        <el-checkbox style="margin:0px 0px 35px 0px;"
+                        <el-checkbox style="display: none;margin:0px 0px 35px 0px;"
                             :checked='remumber.remumber_flag'
                             v-model='remumber.remumber_flag'>记住密码</el-checkbox>
                         <el-form-item style="width:100%;">
