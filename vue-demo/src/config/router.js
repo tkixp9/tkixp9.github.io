@@ -1,13 +1,14 @@
-import {
+import Components from '../components/Components.js';
+
+const {
   Login,
   Home,
   NotFound,
   Content,
   Modules
-} from '../components/';
+} = Components;
 
-
-module.exports = [{
+export default [{
   path: '/',
   redirect: to => {
     return 'login';

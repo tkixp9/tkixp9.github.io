@@ -100,8 +100,7 @@
 </template>
 
 <script>
-  import NoticemanagerJs from './Noticemanager.js';
-  module.exports = NoticemanagerJs;
+  export {default} from  './Noticemanager.js';
 </script>
 <style>
   .el-col-label-mine {

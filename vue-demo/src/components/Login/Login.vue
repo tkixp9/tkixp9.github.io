@@ -38,8 +38,7 @@
 </template>
 
 <script>
-    import LoginJs from './Login.js';
-    module.exports=LoginJs;
+  export { default } from './Login.js';
 </script>
 
 <style scoped lang='less'>

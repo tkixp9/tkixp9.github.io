@@ -4,7 +4,7 @@ import {
 
 import Md5 from '../../libs/MD5';
 
-module.exports = {
+export default {
     name: 'login',
     data() {
         return {

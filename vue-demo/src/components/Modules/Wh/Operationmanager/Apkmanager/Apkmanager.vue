@@ -90,8 +90,7 @@
 </template>
 
 <script>
-  import ApkmanagerJs from './Apkmanager.js';
-  module.exports = ApkmanagerJs;
+  export {default} from './Apkmanager.js';
 </script>
 <style scoped>
   .el-col-label-mine {
